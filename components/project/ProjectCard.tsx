@@ -18,22 +18,19 @@ const TYPE_COLORS: Record<string, string> = {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const coverImage = project.gallery[0];
+  const fallbackImage = "/images/placeholders/project-placeholder.svg";
 
   return (
     <Link href={`/projetos/${project.slug}`} className="group block">
       <article className="overflow-hidden bg-[#EDE9E0] hover:shadow-lg transition-shadow duration-300">
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden">
-          {coverImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={coverImage.src}
-              alt={coverImage.alt}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          ) : (
-            <div className="w-full h-full bg-[#D8D3CA]" />
-          )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={coverImage?.src ?? fallbackImage}
+            alt={coverImage?.alt ?? project.title}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
           {/* Type badge */}
           <span
             className={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded-sm ${TYPE_COLORS[project.type] || TYPE_COLORS.outro}`}

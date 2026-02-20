@@ -17,12 +17,17 @@ interface ProjectPageProps {
 
 export default function ProjectPage({ project, related }: ProjectPageProps) {
   const [hero, ...rest] = project.gallery;
+  const fallbackHero = {
+    src: "/images/placeholders/project-placeholder.svg",
+    alt: project.title,
+  };
+  const heroImage = hero ?? fallbackHero;
 
   return (
     <Layout
       title={project.title}
       description={project.description}
-      image={hero?.src}
+      image={hero?.src ?? fallbackHero.src}
     >
       {/* ── Cabeçalho ─────────────────────── */}
       <section className="pt-16 pb-10 max-w-7xl mx-auto px-6">
@@ -54,32 +59,30 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
 
       {/* ── Galeria ───────────────────────── */}
       <section className="max-w-7xl mx-auto px-6 mb-16">
-        {hero && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {/* Imagem principal — ocupa 2 colunas */}
-            <div className="md:col-span-2 relative aspect-[16/10] overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={hero.src}
-                alt={hero.alt}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Imagens secundárias */}
-            <div className="grid grid-rows-2 gap-3">
-              {rest.slice(0, 2).map((img) => (
-                <div key={img.src} className="relative overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {/* Imagem principal — ocupa 2 colunas */}
+          <div className="md:col-span-2 relative aspect-[16/10] overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={heroImage.src}
+              alt={heroImage.alt}
+              className="w-full h-full object-cover"
+            />
           </div>
-        )}
+          {/* Imagens secundárias */}
+          <div className="grid grid-rows-2 gap-3">
+            {rest.slice(0, 2).map((img) => (
+              <div key={img.src} className="relative overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
         {/* Imagens adicionais */}
         {rest.length > 2 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
