@@ -30,6 +30,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             src={coverImage?.src ?? fallbackImage}
             alt={coverImage?.alt ?? project.title}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            style={{ width: "100%", height: "100%" }}
           />
           {/* Type badge */}
           <span

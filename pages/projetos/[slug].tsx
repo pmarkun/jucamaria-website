@@ -67,6 +67,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
               src={heroImage.src}
               alt={heroImage.alt}
               className="w-full h-full object-cover"
+              style={{ width: "100%", height: "100%" }}
             />
           </div>
           {/* Imagens secundárias */}
@@ -78,6 +79,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
                   src={img.src}
                   alt={img.alt}
                   className="w-full h-full object-cover"
+                  style={{ width: "100%", height: "100%" }}
                 />
               </div>
             ))}
@@ -93,6 +95,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
                   src={img.src}
                   alt={img.alt}
                   className="w-full h-full object-cover"
+                  style={{ width: "100%", height: "100%" }}
                 />
               </div>
             ))}
