@@ -18,22 +18,22 @@ O laboratório revelou que a música pode ser um ponto de entrada para a autonom
     year: 2024,
     gallery: [
       {
-        src: "https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=900&q=80",
+        src: "/images/placeholders/laboratorio-passarinho-1.svg",
         alt: "Crianças construindo instrumentos com materiais reutilizados",
         caption: "Construção de instrumentos com garrafas PET e bambu",
       },
       {
-        src: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&q=80",
+        src: "/images/placeholders/laboratorio-passarinho-2.svg",
         alt: "Instrumentos musicais artesanais expostos",
         caption: "Os instrumentos criados ao longo das seis semanas",
       },
       {
-        src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        src: "/images/placeholders/laboratorio-passarinho-3.svg",
         alt: "Jovem concentrado montando instrumento",
         caption: "Detalhe do processo de montagem",
       },
       {
-        src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80",
+        src: "/images/placeholders/laboratorio-passarinho-4.svg",
         alt: "Apresentação final para a comunidade",
         caption: "Mostra aberta ao bairro",
       },
@@ -71,22 +71,22 @@ Cada residente desenvolveu um trabalho autoral a partir da experiência de imers
     year: 2024,
     gallery: [
       {
-        src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900&q=80",
+        src: "/images/placeholders/cartografias-do-possivel-1.svg",
         alt: "Paisagem rural de Atibaia ao amanhecer",
         caption: "A propriedade rural que abrigou a residência",
       },
       {
-        src: "https://images.unsplash.com/photo-1558618047-3c8c76a7d0d8?w=600&q=80",
+        src: "/images/placeholders/cartografias-do-possivel-2.svg",
         alt: "Artistas em processo de trabalho coletivo",
         caption: "Sessão de troca e feedback entre residentes",
       },
       {
-        src: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=600&q=80",
+        src: "/images/placeholders/cartografias-do-possivel-3.svg",
         alt: "Material de pesquisa e registros",
         caption: "Diários de campo e registros fotográficos",
       },
       {
-        src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80",
+        src: "/images/placeholders/cartografias-do-possivel-4.svg",
         alt: "Exposição dos trabalhos produzidos",
         caption: "Abertura da exposição itinerante",
       },
@@ -125,17 +125,17 @@ O projeto não ensina tecnologia como fim. Ensina tecnologia como linguagem — 
     year: 2023,
     gallery: [
       {
-        src: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&q=80",
+        src: "/images/placeholders/tecendo-redes-1.svg",
         alt: "Jovens em oficina de produção de conteúdo digital",
         caption: "Oficina de produção de podcast",
       },
       {
-        src: "https://images.unsplash.com/photo-1452830978618-d6feae7d0ffa?w=600&q=80",
+        src: "/images/placeholders/tecendo-redes-2.svg",
         alt: "Litoral do Ceará com barcos de pesca",
         caption: "O território: litoral pesqueiro do Ceará",
       },
       {
-        src: "https://images.unsplash.com/photo-1536240478700-b869ad10a2eb?w=600&q=80",
+        src: "/images/placeholders/tecendo-redes-3.svg",
         alt: "Jovem fazendo gravação de vídeo",
         caption: "Produção do documentário sobre tecelagem de rede",
       },
@@ -168,8 +168,7 @@ export const territories: TerritoryData[] = [
     description:
       "Base principal da Juca Maria, Florianópolis concentra as atividades regulares de formação, laboratórios e parcerias com escolas e comunidades da região.",
     phrase: "Base de laboratórios e formação continuada",
-    image:
-      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80",
+    image: "/images/placeholders/territorio-florianopolis.svg",
   },
   {
     slug: "atibaia",
@@ -177,8 +176,7 @@ export const territories: TerritoryData[] = [
     description:
       "A serra de Atibaia abriga as residências artísticas da Juca Maria — um espaço de imersão, produção coletiva e encontro entre artistas de diferentes territórios.",
     phrase: "Residências artísticas e imersão criativa",
-    image:
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=80",
+    image: "/images/placeholders/territorio-atibaia.svg",
   },
   {
     slug: "nordeste",
@@ -186,8 +184,7 @@ export const territories: TerritoryData[] = [
     description:
       "Atuação em parceria com comunidades do litoral e do sertão nordestino, com projetos de tecnologia, cultura popular e formação para jovens.",
     phrase: "Parcerias territoriais e formação comunitária",
-    image:
-      "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80",
+    image: "/images/placeholders/territorio-nordeste.svg",
   },
 ];
 
