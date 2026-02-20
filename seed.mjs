@@ -31,7 +31,17 @@ function uuid() {
   return randomUUID();
 }
 
-function insertProject(p) {
+function getAdminUserId() {
+  const user = db.prepare("SELECT id FROM admin_users LIMIT 1").get();
+  if (!user) {
+    throw new Error(
+      "Nenhum usuário admin encontrado. Acesse http://localhost:1337/admin e crie o usuário admin primeiro."
+    );
+  }
+  return user.id;
+}
+
+function insertProject(p, adminId) {
   const existing = db
     .prepare("SELECT id FROM projects WHERE slug = ?")
     .get(p.slug);
@@ -44,11 +54,11 @@ function insertProject(p) {
     INSERT INTO projects (
       document_id, title, slug, description, long_description,
       type, territory, year, featured, highlights, credits, partners,
-      created_at, updated_at, published_at
+      created_at, updated_at, published_at, created_by_id, updated_by_id
     ) VALUES (
       @document_id, @title, @slug, @description, @long_description,
       @type, @territory, @year, @featured, @highlights, @credits, @partners,
-      @created_at, @updated_at, @published_at
+      @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
     )
   `);
 
@@ -68,13 +78,15 @@ function insertProject(p) {
     created_at: now,
     updated_at: now,
     published_at: now,
+    created_by_id: adminId,
+    updated_by_id: adminId,
   });
 
   console.log(`  ✓  projeto criado: ${p.slug} (id=${result.lastInsertRowid})`);
   return result.lastInsertRowid;
 }
 
-function insertTerritory(t) {
+function insertTerritory(t, adminId) {
   const existing = db
     .prepare("SELECT id FROM territories WHERE slug = ?")
     .get(t.slug);
@@ -86,10 +98,10 @@ function insertTerritory(t) {
   const stmt = db.prepare(`
     INSERT INTO territories (
       document_id, name, slug, description, phrase,
-      created_at, updated_at, published_at
+      created_at, updated_at, published_at, created_by_id, updated_by_id
     ) VALUES (
       @document_id, @name, @slug, @description, @phrase,
-      @created_at, @updated_at, @published_at
+      @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
     )
   `);
 
@@ -102,6 +114,8 @@ function insertTerritory(t) {
     created_at: now,
     updated_at: now,
     published_at: now,
+    created_by_id: adminId,
+    updated_by_id: adminId,
   });
 
   console.log(
@@ -243,14 +257,17 @@ const territories = [
 
 console.log("\n🌱 Iniciando seed...\n");
 
+const adminId = getAdminUserId();
+console.log(`  → usando admin id=${adminId}\n`);
+
 console.log("Territórios:");
 for (const t of territories) {
-  insertTerritory(t);
+  insertTerritory(t, adminId);
 }
 
 console.log("\nProjetos:");
 for (const p of projects) {
-  insertProject(p);
+  insertProject(p, adminId);
 }
 
 db.close();
