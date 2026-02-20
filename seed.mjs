@@ -229,6 +229,65 @@ const territories = [
 ];
 
 // ---------------------------------------------------------------------------
+// Permissões públicas da API
+// ---------------------------------------------------------------------------
+
+/**
+ * Garante que o role "Public" tenha permissão find+findOne para
+ * project e territory. Sem isso a API retorna 403 para qualquer request.
+ */
+function ensurePublicPermissions() {
+  const publicRole = db
+    .prepare("SELECT id FROM up_roles WHERE type = 'public' LIMIT 1")
+    .get();
+  if (!publicRole) {
+    console.log("  ⚠  role Public não encontrado — pulando permissões");
+    return;
+  }
+
+  const actions = [
+    "api::project.project.find",
+    "api::project.project.findOne",
+    "api::territory.territory.find",
+    "api::territory.territory.findOne",
+  ];
+
+  const now = Date.now();
+
+  for (const action of actions) {
+    const existing = db
+      .prepare("SELECT id FROM up_permissions WHERE action = ?")
+      .get(action);
+
+    let permId;
+    if (existing) {
+      permId = existing.id;
+    } else {
+      const res = db
+        .prepare(
+          "INSERT INTO up_permissions (action, created_at, updated_at) VALUES (?, ?, ?)"
+        )
+        .run(action, now, now);
+      permId = res.lastInsertRowid;
+    }
+
+    const linked = db
+      .prepare(
+        "SELECT 1 FROM up_permissions_role_lnk WHERE permission_id = ? AND role_id = ?"
+      )
+      .get(permId, publicRole.id);
+
+    if (!linked) {
+      db.prepare(
+        "INSERT INTO up_permissions_role_lnk (permission_id, role_id) VALUES (?, ?)"
+      ).run(permId, publicRole.id);
+    }
+  }
+
+  console.log("  ✓  permissões públicas (find/findOne) configuradas");
+}
+
+// ---------------------------------------------------------------------------
 // Executar
 // ---------------------------------------------------------------------------
 
@@ -237,7 +296,10 @@ console.log("\n🌱 Iniciando seed...\n");
 const adminId = getAdminUserId();
 console.log(`  → usando admin id=${adminId}\n`);
 
-console.log("Territórios:");
+console.log("Permissões da API:");
+ensurePublicPermissions();
+
+console.log("\nTerritórios:");
 for (const t of territories) {
   insertTerritory(t, adminId);
 }
