@@ -63,11 +63,11 @@ function insertProject(p, adminId) {
   const stmt = db.prepare(`
     INSERT INTO projects (
       document_id, title, slug, description, long_description,
-      type, territory, year, featured, highlights, credits, partners,
+      type, territory, featured, partners,
       created_at, updated_at, published_at, created_by_id, updated_by_id
     ) VALUES (
       @document_id, @title, @slug, @description, @long_description,
-      @type, @territory, @year, @featured, @highlights, @credits, @partners,
+      @type, @territory, @featured, @partners,
       @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
     )
   `);
@@ -80,11 +80,8 @@ function insertProject(p, adminId) {
     long_description: p.longDescription ?? null,
     type: p.type,
     territory: p.territory,
-    year: p.year ?? null,
     featured: p.featured ? 1 : 0,
-    highlights: p.highlights ? JSON.stringify(p.highlights) : null,
-    credits: p.credits ? JSON.stringify(p.credits) : null,
-    partners: p.partners ? JSON.stringify(p.partners) : null,
+    partners: p.partners ?? null,
     created_at: nowMs,
     updated_at: nowMs,
     created_by_id: adminId,
@@ -164,23 +161,7 @@ O laboratório revelou que a música pode ser um ponto de entrada para a autonom
     type: "oficina",
     territory: "Florianópolis",
     featured: true,
-    year: 2024,
-    highlights: [
-      "30 participantes entre 8 e 14 anos",
-      "6 semanas de encontros semanais",
-      "30 instrumentos construídos",
-      "1 mostra aberta para o bairro Saco dos Limões",
-      "Parceria com a Escola Municipal Henrique Veras",
-    ],
-    credits: [
-      { name: "Ana Vieira", role: "Coordenação pedagógica" },
-      { name: "Thiago Melo", role: "Facilitação musical" },
-      { name: "Cláudia Ramos", role: "Produção" },
-    ],
-    partners: [
-      "Escola Municipal Henrique Veras",
-      "Associação de Moradores Saco dos Limões",
-    ],
+    partners: `**Equipe**\n- Ana Vieira — Coordenação pedagógica\n- Thiago Melo — Facilitação musical\n- Cláudia Ramos — Produção\n\n**Parceiros**\n- Escola Municipal Henrique Veras\n- Associação de Moradores Saco dos Limões`,
   },
   {
     slug: "cartografias-do-possivel",
@@ -195,24 +176,7 @@ Cada residente desenvolveu um trabalho autoral a partir da experiência de imers
     type: "residencia",
     territory: "Atibaia",
     featured: true,
-    year: 2024,
-    highlights: [
-      "6 artistas residentes de 5 estados",
-      "8 semanas de imersão",
-      "1 publicação coletiva impressa (200 exemplares)",
-      "Exposição itinerante em 3 cidades",
-      "40 conversas com moradores locais documentadas",
-    ],
-    credits: [
-      { name: "Beatriz Fontes", role: "Curadoria e coordenação" },
-      { name: "Rafael Souza", role: "Facilitação do processo" },
-      { name: "Marina Costa", role: "Produção e logística" },
-    ],
-    partners: [
-      "Fazenda Boa Vista",
-      "Secretaria de Cultura de Atibaia",
-      "Coletivo Margem",
-    ],
+    partners: `**Equipe**\n- Beatriz Fontes — Curadoria e coordenação\n- Rafael Souza — Facilitação do processo\n- Marina Costa — Produção e logística\n\n**Parceiros**\n- Fazenda Boa Vista\n- Secretaria de Cultura de Atibaia\n- Coletivo Margem`,
   },
   {
     slug: "tecendo-redes",
@@ -227,25 +191,7 @@ O projeto não ensina tecnologia como fim. Ensina tecnologia como linguagem — 
     type: "tecnologia",
     territory: "Nordeste",
     featured: true,
-    year: 2023,
-    highlights: [
-      "45 jovens formados em 4 turmas",
-      "4 meses de formação continuada",
-      "1 podcast com 12 episódios",
-      "1 documentário curto (18 minutos)",
-      "+3.000 seguidores no perfil coletivo",
-      "Parceria com 3 associações de pescadores",
-    ],
-    credits: [
-      { name: "Joana Ferreira", role: "Coordenação do programa" },
-      { name: "Lucas Alves", role: "Formação em vídeo e podcast" },
-      { name: "Sofia Mendes", role: "Formação em fotografia" },
-    ],
-    partners: [
-      "Associação de Pescadores de Trairi",
-      "Colônia de Pesca Z-6",
-      "Governo do Estado do Ceará — Secult",
-    ],
+    partners: `**Equipe**\n- Joana Ferreira — Coordenação do programa\n- Lucas Alves — Formação em vídeo e podcast\n- Sofia Mendes — Formação em fotografia\n\n**Parceiros**\n- Associação de Pescadores de Trairi\n- Colônia de Pesca Z-6\n- Governo do Estado do Ceará — Secult`,
   },
 ];
 

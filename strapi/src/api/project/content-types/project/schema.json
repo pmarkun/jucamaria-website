@@ -51,21 +51,12 @@
       ],
       "required": true
     },
-    "year": {
-      "type": "integer"
-    },
     "featured": {
       "type": "boolean",
       "default": false
     },
-    "highlights": {
-      "type": "json"
-    },
-    "credits": {
-      "type": "json"
-    },
     "partners": {
-      "type": "json"
+      "type": "richtext"
     },
     "gallery": {
       "type": "media",

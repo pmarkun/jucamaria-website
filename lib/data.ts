@@ -29,10 +29,7 @@ function adaptProject(raw: StrapiProject): Project {
     longDescription: raw.longDescription ?? undefined,
     type: raw.type as ProjectType,
     territory: raw.territory as Territory,
-    year: raw.year ?? undefined,
     featured: raw.featured ?? false,
-    highlights: raw.highlights ?? undefined,
-    credits: raw.credits ?? undefined,
     partners: raw.partners ?? undefined,
     gallery,
   };

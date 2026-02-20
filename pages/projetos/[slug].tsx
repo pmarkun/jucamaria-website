@@ -39,9 +39,6 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
             {PROJECT_TYPE_LABELS[project.type]}
           </span>
           <span className="text-sm text-[#888]">{project.territory}</span>
-          {project.year && (
-            <span className="text-sm text-[#888]">{project.year}</span>
-          )}
         </div>
 
         <h1
@@ -105,68 +102,25 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
         {/* Texto principal */}
         <div className="md:col-span-2">
           {project.longDescription && (
-            <div className="prose prose-lg max-w-none text-[#2B2B2B]">
-              {project.longDescription.split("\n\n").map((para, i) => (
-                <p key={i} className="mb-5 leading-relaxed text-[#444]">
-                  {para}
-                </p>
-              ))}
-            </div>
+            <div
+              className="prose prose-lg max-w-none text-[#2B2B2B]"
+              dangerouslySetInnerHTML={{ __html: project.longDescription }}
+            />
           )}
         </div>
 
         {/* Sidebar */}
         <aside className="flex flex-col gap-10">
-          {/* Highlights */}
-          {project.highlights && project.highlights.length > 0 && (
-            <div>
-              <h2
-                className="text-xs uppercase tracking-widest text-[#888] font-medium mb-4"
-              >
-                O que aconteceu
-              </h2>
-              <ul className="flex flex-col gap-2">
-                {project.highlights.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-[#2B2B2B]">
-                    <span className="text-[#C65A3A] mt-0.5 shrink-0">—</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Créditos */}
-          {project.credits && project.credits.length > 0 && (
+          {/* Parceiros & Equipe */}
+          {project.partners && (
             <div>
               <h2 className="text-xs uppercase tracking-widest text-[#888] font-medium mb-4">
-                Equipe
+                Parceiros &amp; Equipe
               </h2>
-              <ul className="flex flex-col gap-2">
-                {project.credits.map((c) => (
-                  <li key={c.name} className="text-sm">
-                    <span className="font-medium text-[#2B2B2B]">{c.name}</span>
-                    <br />
-                    <span className="text-[#888]">{c.role}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Parceiros */}
-          {project.partners && project.partners.length > 0 && (
-            <div>
-              <h2 className="text-xs uppercase tracking-widest text-[#888] font-medium mb-4">
-                Parceiros
-              </h2>
-              <ul className="flex flex-col gap-1.5">
-                {project.partners.map((p) => (
-                  <li key={p} className="text-sm text-[#555]">
-                    {p}
-                  </li>
-                ))}
-              </ul>
+              <div
+                className="prose prose-sm max-w-none text-[#555]"
+                dangerouslySetInnerHTML={{ __html: project.partners }}
+              />
             </div>
           )}
         </aside>

@@ -29,11 +29,9 @@ export interface StrapiProject {
   longDescription?: string | null;
   type: string;
   territory: string;
-  year?: number | null;
   featured?: boolean;
-  highlights?: string[] | null;
-  credits?: { name: string; role: string }[] | null;
-  partners?: string[] | null;
+  /** Richtext (HTML) com equipe e parceiros */
+  partners?: string | null;
   gallery?: StrapiMedia[] | null;
   publishedAt: string;
 }
@@ -103,7 +101,6 @@ export async function fetchProjects(params?: Record<string, string>): Promise<St
   const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
     "populate[gallery]": "true",
     "pagination[pageSize]": "100",
-    "sort": "year:desc",
     ...params,
   });
   return response.data;

@@ -23,11 +23,9 @@ export interface Project {
   type: ProjectType;
   territory: Territory;
   gallery: GalleryImage[];
-  year?: number;
-  highlights?: string[];
-  credits?: { name: string; role: string }[];
-  partners?: string[];
   featured?: boolean;
+  /** Markdown/HTML com equipe e parceiros, gerado pelo WYSIWYG do CMS */
+  partners?: string;
 }
 
 export interface TerritoryData {

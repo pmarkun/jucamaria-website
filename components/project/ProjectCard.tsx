@@ -48,12 +48,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <span className="text-xs text-[#888] uppercase tracking-wider">
               {project.territory}
             </span>
-            {project.year && (
-              <>
-                <span className="text-[#ccc]">·</span>
-                <span className="text-xs text-[#888]">{project.year}</span>
-              </>
-            )}
           </div>
           <h3
             style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
