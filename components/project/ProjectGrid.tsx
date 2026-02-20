@@ -1,6 +1,5 @@
-import { useState, useMemo } from "react";
-import type { Project, ProjectType } from "@/types/project";
-import { PROJECT_TYPE_LABELS } from "@/types/project";
+import { useMemo, useState } from "react";
+import type { Project } from "@/types/project";
 import ProjectCard from "./ProjectCard";
 
 interface ProjectGridProps {
@@ -14,18 +13,22 @@ export default function ProjectGrid({
   showFilters = true,
   showSearch = false,
 }: ProjectGridProps) {
-  const [activeFilter, setActiveFilter] = useState<"all" | ProjectType>("all");
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const [query, setQuery] = useState("");
 
-  // Derive available types from the projects list
-  const availableTypes = useMemo(() => {
-    const types = new Set(projects.map((p) => p.type));
-    return Array.from(types) as ProjectType[];
+  const availableCategories = useMemo(() => {
+    const map = new Map<string, string>();
+    projects.forEach((p) => {
+      const key = p.categorySlug ?? p.type.toLowerCase();
+      if (!map.has(key)) map.set(key, p.type);
+    });
+    return Array.from(map.entries()).map(([slug, name]) => ({ slug, name }));
   }, [projects]);
 
   const filtered = useMemo(() => {
     return projects.filter((p) => {
-      const matchesType = activeFilter === "all" || p.type === activeFilter;
+      const key = p.categorySlug ?? p.type.toLowerCase();
+      const matchesType = activeFilter === "all" || key === activeFilter;
       const matchesQuery =
         !query ||
         p.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -36,7 +39,6 @@ export default function ProjectGrid({
 
   return (
     <div>
-      {/* Filters */}
       {(showFilters || showSearch) && (
         <div className="flex flex-col md:flex-row gap-4 mb-10">
           {showSearch && (
@@ -45,7 +47,7 @@ export default function ProjectGrid({
               placeholder="Buscar projetos..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="border border-[#D8D3CA] bg-[#EDE9E0] px-4 py-2 text-sm text-[#2B2B2B] placeholder-[#aaa] focus:outline-none focus:border-[#C65A3A] w-full md:w-72"
+              className="border border-[#D8D3CA] bg-[#FAFAF7] px-4 py-2 text-sm text-[#2B2B2B] placeholder-[#aaa] focus:outline-none focus:border-[#C65A3A] w-full md:w-72"
             />
           )}
           {showFilters && (
@@ -60,17 +62,17 @@ export default function ProjectGrid({
               >
                 Todos
               </button>
-              {availableTypes.map((type) => (
+              {availableCategories.map((cat) => (
                 <button
-                  key={type}
-                  onClick={() => setActiveFilter(type)}
+                  key={cat.slug}
+                  onClick={() => setActiveFilter(cat.slug)}
                   className={`text-xs px-3 py-1.5 border transition-colors rounded-sm font-medium ${
-                    activeFilter === type
+                    activeFilter === cat.slug
                       ? "bg-[#2B2B2B] text-[#F2EFE8] border-[#2B2B2B]"
                       : "bg-transparent text-[#2B2B2B] border-[#D8D3CA] hover:border-[#2B2B2B]"
                   }`}
                 >
-                  {PROJECT_TYPE_LABELS[type]}
+                  {cat.name}
                 </button>
               ))}
             </div>
@@ -78,11 +80,8 @@ export default function ProjectGrid({
         </div>
       )}
 
-      {/* Grid */}
       {filtered.length === 0 ? (
-        <p className="text-[#888] text-sm py-12 text-center">
-          Nenhum projeto encontrado.
-        </p>
+        <p className="text-[#888] text-sm py-12 text-center">Nenhum projeto encontrado.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((project) => (

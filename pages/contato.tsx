@@ -7,7 +7,7 @@ export default function ContatoPage() {
       description="Entre em contato com a Juca Maria."
     >
       {/* Header */}
-      <section className="bg-[#EDE9E0] py-20 px-6">
+      <section className="bg-[#FAFAF7] py-20 px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
             Conversa

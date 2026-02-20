@@ -1,37 +1,71 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { href: "/projetos", label: "Projetos" },
   { href: "/territorios", label: "Territórios" },
-  { href: "/vivencias", label: "Residências" },
+  { href: "/residencias", label: "Residências" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];
 
+function getStrapiBaseUrl() {
+  return process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
+}
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    async function loadLogo() {
+      try {
+        const res = await fetch(`${getStrapiBaseUrl()}/api/home?populate[logo]=true`, {
+          signal: controller.signal,
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const url = json?.data?.logo?.url as string | undefined;
+        if (!url) return;
+        setLogoUrl(url.startsWith("http") ? url : `${getStrapiBaseUrl()}${url}`);
+      } catch {
+        // fallback textual logo
+      }
+    }
+    loadLogo();
+    return () => controller.abort();
+  }, []);
 
   return (
     <header
       style={{ fontFamily: "var(--font-inter, Inter, sans-serif)" }}
-      className="sticky top-0 z-50 bg-[#F2EFE8]/95 backdrop-blur-sm border-b border-[#D8D3CA]"
+      className="sticky top-0 z-50 bg-[#FAFAF7]/95 backdrop-blur-sm border-b border-[#D8D3CA]"
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex flex-col leading-none group">
-          <span
-            style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
-            className="text-lg font-semibold text-[#2B2B2B] group-hover:text-[#C65A3A] transition-colors"
-          >
-            Juca Maria
-          </span>
-          <span className="text-[10px] uppercase tracking-widest text-[#C65A3A] font-medium">
-            Cultura · Arte · Educação
-          </span>
+        <Link href="/" className="flex items-center leading-none group min-w-[170px]">
+          {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logoUrl}
+              alt="Juca Maria"
+              className="h-10 w-auto object-contain"
+            />
+          ) : (
+            <div className="flex flex-col">
+              <span
+                style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
+                className="text-lg font-semibold text-[#2B2B2B] group-hover:text-[#C65A3A] transition-colors"
+              >
+                Juca Maria
+              </span>
+              <span className="text-[10px] uppercase tracking-widest text-[#C65A3A] font-medium">
+                Cultura · Arte · Educação
+              </span>
+            </div>
+          )}
         </Link>
 
-        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
@@ -44,7 +78,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Mobile menu button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden flex flex-col gap-1.5 p-1"
@@ -62,9 +95,8 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[#D8D3CA] bg-[#F2EFE8]">
+        <div className="md:hidden border-t border-[#D8D3CA] bg-[#FAFAF7]">
           <nav className="px-6 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Project } from "@/types/project";
-import { PROJECT_TYPE_LABELS } from "@/types/project";
 
 interface ProjectCardProps {
   project: Project;
@@ -19,10 +18,11 @@ const TYPE_COLORS: Record<string, string> = {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const coverImage = project.gallery[0];
   const fallbackImage = "/images/placeholders/project-placeholder.svg";
+  const labelKey = (project.categorySlug ?? project.type).toLowerCase();
 
   return (
     <Link href={`/projetos/${project.slug}`} className="group block">
-      <article className="overflow-hidden bg-[#EDE9E0] hover:shadow-lg transition-shadow duration-300">
+      <article className="overflow-hidden bg-[#FAFAF7] hover:shadow-lg transition-shadow duration-300">
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -34,9 +34,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           />
           {/* Type badge */}
           <span
-            className={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded-sm ${TYPE_COLORS[project.type] || TYPE_COLORS.outro}`}
+            className={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded-sm ${TYPE_COLORS[labelKey] || TYPE_COLORS.outro}`}
           >
-            {PROJECT_TYPE_LABELS[project.type]}
+            {project.type}
           </span>
         </div>
 

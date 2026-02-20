@@ -3,13 +3,13 @@
 
 @theme {
   /* Paleta Juca Maria */
-  --color-areia: #F2EFE8;
+  --color-areia: #FAFAF7;
   --color-grafite: #2B2B2B;
   --color-terracota: #C65A3A;
   --color-azul: #2F4E6F;
   --color-amarelo: #E7B53E;
   --color-muted: #D8D3CA;
-  --color-cream: #EDE9E0;
+  --color-cream: #F4F4F1;
 
   /* Font families */
   --font-display: "Lora", Georgia, serif;

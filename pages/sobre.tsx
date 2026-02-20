@@ -95,7 +95,7 @@ export default function SobrePage() {
       </section>
 
       {/* Método */}
-      <section className="bg-[#EDE9E0] py-20 px-6">
+      <section className="bg-[#FAFAF7] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
             Método
@@ -138,7 +138,7 @@ export default function SobrePage() {
       </section>
 
       {/* Parceiros */}
-      <section className="bg-[#EDE9E0] py-20 px-6">
+      <section className="bg-[#FAFAF7] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
             Rede
@@ -162,7 +162,7 @@ export default function SobrePage() {
             ].map((p) => (
               <div
                 key={p}
-                className="bg-[#F2EFE8] border border-[#D8D3CA] px-4 py-3 text-sm text-[#555] text-center"
+                className="bg-[#FAFAF7] border border-[#D8D3CA] px-4 py-3 text-sm text-[#555] text-center"
               >
                 {p}
               </div>
