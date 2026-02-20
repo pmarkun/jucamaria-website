@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_home_method_items",
+  "info": {
+    "displayName": "MethodItem",
+    "description": "Um item do bloco 'Como atuamos' na home"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

@@ -148,6 +148,83 @@ function insertTerritory(t, adminId) {
 }
 
 // ---------------------------------------------------------------------------
+// Home (Single Type)
+// ---------------------------------------------------------------------------
+
+function insertHome(adminId) {
+  const existing = db
+    .prepare("SELECT id FROM homes WHERE published_at IS NULL")
+    .get();
+  if (existing) {
+    console.log("  ⏭  home já existe");
+    return;
+  }
+
+  const docId = uuid();
+
+  const stmt = db.prepare(`
+    INSERT INTO homes (
+      document_id, hero_title, hero_subtitle,
+      created_at, updated_at, published_at, created_by_id, updated_by_id
+    ) VALUES (
+      @document_id, @hero_title, @hero_subtitle,
+      @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
+    )
+  `);
+
+  const common = {
+    document_id: docId,
+    hero_title: "Laboratórios de arte, cultura e tecnologia que criam presença no mundo.",
+    hero_subtitle: "Residências, oficinas e projetos territoriais em rede.",
+    created_at: nowMs,
+    updated_at: nowMs,
+    created_by_id: adminId,
+    updated_by_id: adminId,
+  };
+
+  // Draft
+  const draftResult = stmt.run({ ...common, published_at: null });
+  const draftId = draftResult.lastInsertRowid;
+
+  // Published
+  const pubResult = stmt.run({ ...common, published_at: nowMs });
+  const pubId = pubResult.lastInsertRowid;
+
+  // Inserir os 3 itens do "Como atuamos" como componentes
+  const methods = [
+    {
+      title: "Laboratório",
+      description: "Prototipar, experimentar, errar rápido. Criamos espaços onde a tentativa é o método — não o fracasso.",
+    },
+    {
+      title: "Residência",
+      description: "Tempo longo, imersão, produção coletiva. Quando o processo tem duração, ele transforma.",
+    },
+    {
+      title: "Circulação",
+      description: "Compartilhar com o território: mostras, encontros, publicações. O que foi criado precisa chegar a quem não estava lá.",
+    },
+  ];
+
+  const insertCmp = db.prepare(
+    "INSERT INTO components_home_method_items (title, description) VALUES (?, ?)"
+  );
+  const linkCmp = db.prepare(
+    "INSERT INTO homes_cmps (entity_id, cmp_id, component_type, field, [order]) VALUES (?, ?, ?, ?, ?)"
+  );
+
+  for (const [i, method] of methods.entries()) {
+    const cmpResult = insertCmp.run(method.title, method.description);
+    const cmpId = cmpResult.lastInsertRowid;
+    // Vincular ao draft e ao published
+    linkCmp.run(draftId, cmpId, "home.method-item", "methods", i + 1);
+    linkCmp.run(pubId,   cmpId, "home.method-item", "methods", i + 1);
+  }
+
+  console.log(`  ✓  home criada (document_id=${docId})`);
+}
+
+// ---------------------------------------------------------------------------
 // Dados
 // ---------------------------------------------------------------------------
 
@@ -250,6 +327,7 @@ function ensurePublicPermissions() {
     "api::project.project.findOne",
     "api::territory.territory.find",
     "api::territory.territory.findOne",
+    "api::home.home.find",
   ];
 
   const now = Date.now();
@@ -298,6 +376,9 @@ console.log(`  → usando admin id=${adminId}\n`);
 
 console.log("Permissões da API:");
 ensurePublicPermissions();
+
+console.log("\nHome:");
+insertHome(adminId);
 
 console.log("\nTerritórios:");
 for (const t of territories) {

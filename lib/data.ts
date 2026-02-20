@@ -1,4 +1,4 @@
-import type { Project, TerritoryData, ProjectType, Territory } from "@/types/project";
+import type { Project, TerritoryData, ProjectType, Territory, HomeData } from "@/types/project";
 import {
   fetchProjects,
   fetchProjectBySlug,
@@ -6,6 +6,7 @@ import {
   fetchProjectsByType,
   fetchProjectsByTerritory,
   fetchTerritories,
+  fetchHome,
   mediaUrl,
   type StrapiProject,
   type StrapiTerritory,
@@ -91,4 +92,18 @@ export async function getRelatedProjects(project: Project, limit = 3): Promise<P
 export async function getTerritories(): Promise<TerritoryData[]> {
   const data = await fetchTerritories();
   return data.map(adaptTerritory);
+}
+
+export async function getHomePage(): Promise<HomeData | null> {
+  const raw = await fetchHome();
+  if (!raw) return null;
+  return {
+    heroTitle: raw.heroTitle,
+    heroSubtitle: raw.heroSubtitle ?? null,
+    heroImage: mediaUrl(raw.heroImage ?? null) ?? null,
+    methods: (raw.methods ?? []).map((m) => ({
+      title: m.title,
+      description: m.description,
+    })),
+  };
 }

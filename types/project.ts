@@ -32,6 +32,18 @@ export interface Project {
   endDate?: string | null;
 }
 
+export interface MethodItem {
+  title: string;
+  description: string;
+}
+
+export interface HomeData {
+  heroTitle: string;
+  heroSubtitle: string | null;
+  heroImage: string | null;
+  methods: MethodItem[];
+}
+
 export interface TerritoryData {
   slug: string;
   name: Territory;

@@ -1,15 +1,50 @@
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
-import type { Project, TerritoryData } from "@/types/project";
-import { getFeaturedProjects, getTerritories } from "@/lib/data";
+import type { Project, TerritoryData, HomeData } from "@/types/project";
+import { getFeaturedProjects, getTerritories, getHomePage } from "@/lib/data";
+
+const FALLBACK_METHODS = [
+  {
+    icon: "◈",
+    title: "Laboratório",
+    description:
+      "Prototipar, experimentar, errar rápido. Criamos espaços onde a tentativa é o método — não o fracasso.",
+  },
+  {
+    icon: "◉",
+    title: "Residência",
+    description:
+      "Tempo longo, imersão, produção coletiva. Quando o processo tem duração, ele transforma.",
+  },
+  {
+    icon: "◎",
+    title: "Circulação",
+    description:
+      "Compartilhar com o território: mostras, encontros, publicações. O que foi criado precisa chegar a quem não estava lá.",
+  },
+];
+
+const ICONS = ["◈", "◉", "◎"];
 
 interface HomeProps {
   featuredProjects: Project[];
   territoriesData: TerritoryData[];
+  homeData: HomeData | null;
 }
 
-export default function Home({ featuredProjects, territoriesData }: HomeProps) {
+export default function Home({ featuredProjects, territoriesData, homeData }: HomeProps) {
+  const heroTitle =
+    homeData?.heroTitle ?? "Laboratórios de arte, cultura e tecnologia que criam presença no mundo.";
+  const heroSubtitle =
+    homeData?.heroSubtitle ?? "Residências, oficinas e projetos territoriais em rede.";
+  const heroImage = homeData?.heroImage ?? "/images/placeholders/hero.svg";
+
+  const methods =
+    homeData?.methods && homeData.methods.length > 0
+      ? homeData.methods.map((m, i) => ({ ...m, icon: ICONS[i] ?? "◎" }))
+      : FALLBACK_METHODS;
+
   return (
     <Layout>
       {/* ── BLOCO 1: Hero ─────────────────────────────────── */}
@@ -18,8 +53,8 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/placeholders/hero.svg"
-            alt="Oficina de arte com pessoas trabalhando"
+            src={heroImage}
+            alt="Imagem de capa da Juca Maria"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/85 via-[#2B2B2B]/20 to-[#1C2B3A]/30" />
@@ -34,11 +69,10 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
             style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
             className="text-4xl md:text-6xl lg:text-7xl font-semibold text-[#F2EFE8] max-w-3xl leading-tight mb-6"
           >
-            Laboratórios de arte, cultura e tecnologia que criam presença no
-            mundo.
+            {heroTitle}
           </h1>
           <p className="text-[#D8D3CA] text-lg md:text-xl max-w-xl mb-10">
-            Residências, oficinas e projetos territoriais em rede.
+            {heroSubtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
@@ -155,26 +189,7 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {[
-            {
-              icon: "◈",
-              title: "Laboratório",
-              description:
-                "Prototipar, experimentar, errar rápido. Criamos espaços onde a tentativa é o método — não o fracasso.",
-            },
-            {
-              icon: "◉",
-              title: "Residência",
-              description:
-                "Tempo longo, imersão, produção coletiva. Quando o processo tem duração, ele transforma.",
-            },
-            {
-              icon: "◎",
-              title: "Circulação",
-              description:
-                "Compartilhar com o território: mostras, encontros, publicações. O que foi criado precisa chegar a quem não estava lá.",
-            },
-          ].map((item) => (
+          {methods.map((item) => (
             <div key={item.title} className="group">
               <div className="text-4xl text-[#C65A3A] mb-6 font-light">
                 {item.icon}
@@ -197,12 +212,16 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
 }
 
 export async function getStaticProps() {
-  const featuredProjects = await getFeaturedProjects();
-  const territoriesData = await getTerritories();
+  const [featuredProjects, territoriesData, homeData] = await Promise.all([
+    getFeaturedProjects(),
+    getTerritories(),
+    getHomePage(),
+  ]);
   return {
     props: {
       featuredProjects,
       territoriesData,
+      homeData,
     },
   };
 }

@@ -40,6 +40,22 @@ export interface StrapiProject {
   publishedAt: string;
 }
 
+export interface StrapiMethodItem {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface StrapiHome {
+  id: number;
+  documentId: string;
+  heroTitle: string;
+  heroSubtitle?: string | null;
+  heroImage?: StrapiMedia | null;
+  methods?: StrapiMethodItem[] | null;
+  publishedAt: string;
+}
+
 export interface StrapiTerritory {
   id: number;
   documentId: string;
@@ -128,6 +144,22 @@ export async function fetchProjectsByType(type: string): Promise<StrapiProject[]
 
 export async function fetchProjectsByTerritory(territory: string): Promise<StrapiProject[]> {
   return fetchProjects({ "filters[territory][$eq]": territory });
+}
+
+// ---------------------------------------------------------------------------
+// Queries da home
+// ---------------------------------------------------------------------------
+
+export async function fetchHome(): Promise<StrapiHome | null> {
+  try {
+    const response = await strapiGet<{ data: StrapiHome }>("/home", {
+      "populate[heroImage]": "true",
+      "populate[methods]": "true",
+    });
+    return response.data ?? null;
+  } catch {
+    return null;
+  }
 }
 
 // ---------------------------------------------------------------------------
