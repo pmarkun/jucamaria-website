@@ -12,7 +12,7 @@ export type Territory = "Florianópolis" | "Atibaia" | "Nordeste" | "Nacional";
 export interface GalleryImage {
   src: string;
   alt: string;
-  caption?: string;
+  caption?: string | null;
 }
 
 export interface Project {

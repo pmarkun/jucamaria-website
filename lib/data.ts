@@ -19,7 +19,7 @@ function adaptProject(raw: StrapiProject): Project {
   const gallery = (raw.gallery ?? []).map((img) => ({
     src: mediaUrl(img) ?? "",
     alt: img.alternativeText ?? img.caption ?? raw.title,
-    caption: img.caption ?? undefined,
+      caption: img.caption ?? null,
   }));
 
   return {
