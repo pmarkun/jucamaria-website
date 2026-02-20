@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <pattern id="wave" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 0 20 Q 20 0 40 20 Q 60 40 80 20" fill="none" stroke="#F2EFE8" stroke-width="0.8" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="#2F4E6F"/>
+  <rect width="800" height="600" fill="url(#wave)"/>
+  <!-- Sea/coast suggestion -->
+  <ellipse cx="400" cy="420" rx="350" ry="80" fill="#1A3550" opacity="0.6"/>
+  <ellipse cx="400" cy="460" rx="380" ry="60" fill="#1A3550" opacity="0.4"/>
+  <!-- Hills/island silhouette -->
+  <path d="M 0 350 Q 150 280 300 320 Q 400 300 450 330 Q 550 280 650 310 Q 730 290 800 320 L 800 600 L 0 600 Z" fill="#1E3D5A" opacity="0.7"/>
+  <path d="M 0 380 Q 100 340 200 365 Q 320 330 420 355 Q 520 330 620 360 Q 720 335 800 355 L 800 600 L 0 600 Z" fill="#16304A" opacity="0.5"/>
+  <!-- Label -->
+  <rect x="0" y="480" width="800" height="120" fill="#2B2B2B" opacity="0.55"/>
+  <text x="400" y="525" font-family="Georgia, serif" font-size="20" fill="#F2EFE8" text-anchor="middle" opacity="0.9">Florianópolis</text>
+  <text x="400" y="553" font-family="Arial, sans-serif" font-size="12" fill="#E7B53E" text-anchor="middle" opacity="0.7">Base de laboratórios e formação continuada</text>
+  <text x="400" y="577" font-family="Arial, sans-serif" font-size="10" fill="#F2EFE8" text-anchor="middle" opacity="0.35">[ foto real a definir ]</text>
+</svg>

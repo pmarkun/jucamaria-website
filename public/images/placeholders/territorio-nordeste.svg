@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <pattern id="sand" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1" fill="#E7B53E" opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="#8B5E2A"/>
+  <rect width="800" height="600" fill="url(#sand)"/>
+  <!-- Sky gradient suggestion -->
+  <rect x="0" y="0" width="800" height="280" fill="#C65A3A" opacity="0.25"/>
+  <!-- Coast/dunes -->
+  <path d="M 0 320 Q 200 280 400 300 Q 600 320 800 290 L 800 600 L 0 600 Z" fill="#6B4218" opacity="0.7"/>
+  <path d="M 0 360 Q 150 330 300 350 Q 500 360 700 340 L 800 345 L 800 600 L 0 600 Z" fill="#543310" opacity="0.6"/>
+  <!-- Sun -->
+  <circle cx="400" cy="180" r="55" fill="#E7B53E" opacity="0.3"/>
+  <circle cx="400" cy="180" r="35" fill="#E7B53E" opacity="0.2"/>
+  <!-- Label -->
+  <rect x="0" y="480" width="800" height="120" fill="#2B2B2B" opacity="0.55"/>
+  <text x="400" y="525" font-family="Georgia, serif" font-size="20" fill="#F2EFE8" text-anchor="middle" opacity="0.9">Nordeste</text>
+  <text x="400" y="553" font-family="Arial, sans-serif" font-size="12" fill="#E7B53E" text-anchor="middle" opacity="0.7">Parcerias territoriais e formação comunitária</text>
+  <text x="400" y="577" font-family="Arial, sans-serif" font-size="10" fill="#F2EFE8" text-anchor="middle" opacity="0.35">[ foto real a definir ]</text>
+</svg>

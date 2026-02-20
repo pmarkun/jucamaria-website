@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2" fill="#E7B53E" opacity="0.08"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2B2B2B" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2B2B2B" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect width="1800" height="1000" fill="#1C2B3A"/>
+  <rect width="1800" height="1000" fill="url(#dots)"/>
+  <!-- Abstract: hands working / making -->
+  <circle cx="900" cy="420" r="300" fill="none" stroke="#F2EFE8" stroke-width="1" opacity="0.08"/>
+  <circle cx="900" cy="420" r="220" fill="none" stroke="#C65A3A" stroke-width="1.5" opacity="0.12"/>
+  <!-- Scattered geometric shapes suggesting materials/process -->
+  <rect x="620" y="280" width="80" height="80" fill="#C65A3A" opacity="0.15" transform="rotate(15 660 320)"/>
+  <rect x="780" y="300" width="60" height="60" fill="#E7B53E" opacity="0.12" transform="rotate(-8 810 330)"/>
+  <rect x="1020" y="310" width="70" height="70" fill="#2F4E6F" opacity="0.2" transform="rotate(20 1055 345)"/>
+  <circle cx="700" cy="480" r="40" fill="#E7B53E" opacity="0.1"/>
+  <circle cx="1100" cy="400" r="50" fill="#C65A3A" opacity="0.1"/>
+  <!-- Horizontal lines suggesting a workspace surface -->
+  <line x1="400" y1="560" x2="1400" y2="560" stroke="#F2EFE8" stroke-width="1" opacity="0.1"/>
+  <line x1="500" y1="580" x2="1300" y2="580" stroke="#F2EFE8" stroke-width="0.8" opacity="0.07"/>
+  <rect width="1800" height="1000" fill="url(#fade)"/>
+  <!-- Label (subtle, bottom) -->
+  <text x="900" y="930" font-family="Georgia, serif" font-size="18" fill="#F2EFE8" text-anchor="middle" opacity="0.25">[ foto hero — imagem real a definir ]</text>
+</svg>

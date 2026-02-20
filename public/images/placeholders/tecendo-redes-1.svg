@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
+  <defs>
+    <pattern id="grid" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#E7B53E" stroke-width="0.5" opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="675" fill="#1A3A2A"/>
+  <rect width="900" height="675" fill="url(#grid)"/>
+  <rect x="0" y="500" width="900" height="175" fill="#2B2B2B" opacity="0.5"/>
+  <!-- Wave/ocean suggestion -->
+  <path d="M 200 280 Q 280 250 360 280 Q 440 310 520 280 Q 600 250 680 280 Q 760 310 800 290" fill="none" stroke="#F2EFE8" stroke-width="2" opacity="0.4"/>
+  <path d="M 150 310 Q 250 280 350 310 Q 450 340 550 310 Q 650 280 750 310" fill="none" stroke="#F2EFE8" stroke-width="1.5" opacity="0.3"/>
+  <path d="M 200 340 Q 300 315 400 340 Q 500 365 600 340 Q 700 315 800 340" fill="none" stroke="#F2EFE8" stroke-width="1" opacity="0.2"/>
+  <!-- Phone/camera icon -->
+  <rect x="415" y="200" width="70" height="110" rx="8" fill="none" stroke="#E7B53E" stroke-width="2" opacity="0.7"/>
+  <circle cx="450" cy="285" r="8" fill="none" stroke="#E7B53E" stroke-width="1.5" opacity="0.7"/>
+  <line x1="430" y1="220" x2="470" y2="220" stroke="#F2EFE8" stroke-width="2" opacity="0.5"/>
+  <!-- Net texture -->
+  <line x1="150" y1="380" x2="750" y2="380" stroke="#E7B53E" stroke-width="0.8" opacity="0.2"/>
+  <line x1="150" y1="400" x2="750" y2="400" stroke="#E7B53E" stroke-width="0.8" opacity="0.15"/>
+  <line x1="300" y1="370" x2="300" y2="415" stroke="#E7B53E" stroke-width="0.8" opacity="0.2"/>
+  <line x1="370" y1="370" x2="370" y2="415" stroke="#E7B53E" stroke-width="0.8" opacity="0.2"/>
+  <line x1="440" y1="370" x2="440" y2="415" stroke="#E7B53E" stroke-width="0.8" opacity="0.2"/>
+  <line x1="510" y1="370" x2="510" y2="415" stroke="#E7B53E" stroke-width="0.8" opacity="0.2"/>
+  <line x1="580" y1="370" x2="580" y2="415" stroke="#E7B53E" stroke-width="0.8" opacity="0.2"/>
+  <!-- Label -->
+  <text x="450" y="555" font-family="Georgia, serif" font-size="22" fill="#F2EFE8" text-anchor="middle" opacity="0.9">Tecendo Redes</text>
+  <text x="450" y="585" font-family="Arial, sans-serif" font-size="13" fill="#E7B53E" text-anchor="middle" opacity="0.7">Nordeste · Tecnologia · 2023</text>
+  <text x="450" y="615" font-family="Arial, sans-serif" font-size="11" fill="#F2EFE8" text-anchor="middle" opacity="0.4">[ imagem ilustrativa — foto real a definir ]</text>
+</svg>
