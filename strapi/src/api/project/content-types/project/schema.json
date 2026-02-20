@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project",
+    "description": "Projetos da Juca Maria"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "longDescription": {
+      "type": "richtext"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "arte",
+        "tecnologia",
+        "educacao",
+        "residencia",
+        "oficina",
+        "pesquisa",
+        "outro"
+      ],
+      "required": true
+    },
+    "territory": {
+      "type": "enumeration",
+      "enum": [
+        "Florianópolis",
+        "Atibaia",
+        "Nordeste",
+        "Nacional"
+      ],
+      "required": true
+    },
+    "year": {
+      "type": "integer"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "highlights": {
+      "type": "json"
+    },
+    "credits": {
+      "type": "json"
+    },
+    "partners": {
+      "type": "json"
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

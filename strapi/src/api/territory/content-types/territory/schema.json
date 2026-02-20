@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "territories",
+  "info": {
+    "singularName": "territory",
+    "pluralName": "territories",
+    "displayName": "Territory",
+    "description": "Territórios de atuação da Juca Maria"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "enumeration",
+      "enum": [
+        "Florianópolis",
+        "Atibaia",
+        "Nordeste",
+        "Nacional"
+      ],
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "phrase": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
