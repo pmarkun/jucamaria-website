@@ -21,7 +21,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, "strapi", ".tmp", "data.db");
 
 const db = new Database(DB_PATH);
-const now = new Date().toISOString();
+// Strapi v5 armazena timestamps como milissegundos (número inteiro), não ISO string.
+const nowMs = Date.now();
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -41,14 +42,23 @@ function getAdminUserId() {
   return user.id;
 }
 
+/**
+ * Strapi v5 cria dois registros por document:
+ *   1. draft  — published_at = null
+ *   2. published — published_at = <timestamp ms>
+ * Ambos compartilham o mesmo document_id.
+ * O admin panel lê os documentos pela versão draft; a API pública retorna a publicada.
+ */
 function insertProject(p, adminId) {
   const existing = db
-    .prepare("SELECT id FROM projects WHERE slug = ?")
+    .prepare("SELECT id FROM projects WHERE slug = ? AND published_at IS NULL")
     .get(p.slug);
   if (existing) {
     console.log(`  ⏭  projeto já existe: ${p.slug}`);
     return existing.id;
   }
+
+  const docId = uuid();
 
   const stmt = db.prepare(`
     INSERT INTO projects (
@@ -62,8 +72,8 @@ function insertProject(p, adminId) {
     )
   `);
 
-  const result = stmt.run({
-    document_id: uuid(),
+  const common = {
+    document_id: docId,
     title: p.title,
     slug: p.slug,
     description: p.description,
@@ -75,25 +85,32 @@ function insertProject(p, adminId) {
     highlights: p.highlights ? JSON.stringify(p.highlights) : null,
     credits: p.credits ? JSON.stringify(p.credits) : null,
     partners: p.partners ? JSON.stringify(p.partners) : null,
-    created_at: now,
-    updated_at: now,
-    published_at: now,
+    created_at: nowMs,
+    updated_at: nowMs,
     created_by_id: adminId,
     updated_by_id: adminId,
-  });
+  };
 
-  console.log(`  ✓  projeto criado: ${p.slug} (id=${result.lastInsertRowid})`);
+  // Draft (published_at = null) — visível no admin panel
+  stmt.run({ ...common, published_at: null });
+
+  // Published (published_at = timestamp ms) — retornado pela API pública
+  const result = stmt.run({ ...common, published_at: nowMs });
+
+  console.log(`  ✓  projeto criado: ${p.slug} (document_id=${docId})`);
   return result.lastInsertRowid;
 }
 
 function insertTerritory(t, adminId) {
   const existing = db
-    .prepare("SELECT id FROM territories WHERE slug = ?")
+    .prepare("SELECT id FROM territories WHERE slug = ? AND published_at IS NULL")
     .get(t.slug);
   if (existing) {
     console.log(`  ⏭  território já existe: ${t.slug}`);
     return existing.id;
   }
+
+  const docId = uuid();
 
   const stmt = db.prepare(`
     INSERT INTO territories (
@@ -105,21 +122,26 @@ function insertTerritory(t, adminId) {
     )
   `);
 
-  const result = stmt.run({
-    document_id: uuid(),
+  const common = {
+    document_id: docId,
     name: t.name,
     slug: t.slug,
     description: t.description,
     phrase: t.phrase,
-    created_at: now,
-    updated_at: now,
-    published_at: now,
+    created_at: nowMs,
+    updated_at: nowMs,
     created_by_id: adminId,
     updated_by_id: adminId,
-  });
+  };
+
+  // Draft
+  stmt.run({ ...common, published_at: null });
+
+  // Published
+  const result = stmt.run({ ...common, published_at: nowMs });
 
   console.log(
-    `  ✓  território criado: ${t.slug} (id=${result.lastInsertRowid})`
+    `  ✓  território criado: ${t.slug} (document_id=${docId})`
   );
   return result.lastInsertRowid;
 }
