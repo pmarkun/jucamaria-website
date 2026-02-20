@@ -1,13 +1,12 @@
-export type ProjectType =
-  | "arte"
-  | "tecnologia"
-  | "educacao"
-  | "residencia"
-  | "oficina"
-  | "pesquisa"
-  | "outro";
+export interface CategoryRef {
+  slug: string;
+  name: string;
+}
 
-export type Territory = "Florianópolis" | "Atibaia" | "Nordeste" | "Nacional";
+export interface TerritoryRef {
+  slug: string;
+  name: string;
+}
 
 export interface GalleryImage {
   src: string;
@@ -20,15 +19,14 @@ export interface Project {
   title: string;
   description: string;
   longDescription?: string | null;
-  type: ProjectType;
-  territory: Territory;
+  type: string;
+  territory: string;
+  categorySlug?: string | null;
+  territorySlug?: string | null;
   gallery: GalleryImage[];
   featured?: boolean;
-  /** Markdown/HTML com equipe e parceiros, gerado pelo WYSIWYG do CMS */
   partners?: string | null;
-  /** Data de início do projeto (YYYY-MM-DD) */
   startDate?: string | null;
-  /** Data de encerramento do projeto (YYYY-MM-DD) */
   endDate?: string | null;
 }
 
@@ -41,23 +39,20 @@ export interface HomeData {
   heroTitle: string;
   heroSubtitle: string | null;
   heroImage: string | null;
+  logo: string | null;
   methods: MethodItem[];
 }
 
 export interface TerritoryData {
   slug: string;
-  name: Territory;
+  name: string;
   description: string;
   phrase: string;
   image: string;
 }
 
-export const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
-  arte: "Arte",
-  tecnologia: "Tecnologia",
-  educacao: "Educação",
-  residencia: "Residência",
-  oficina: "Oficina",
-  pesquisa: "Pesquisa",
-  outro: "Outro",
-};
+export interface CategoryData {
+  slug: string;
+  name: string;
+  longDescription?: string | null;
+}

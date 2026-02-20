@@ -1,14 +1,4 @@
-/**
- * Cliente para a API do Strapi v5.
- * Base URL configurável via NEXT_PUBLIC_STRAPI_URL (default: http://localhost:1337).
- */
-
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
-
-// ---------------------------------------------------------------------------
-// Tipos brutos da API do Strapi v5
-// ---------------------------------------------------------------------------
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
 
 export interface StrapiMedia {
   id: number;
@@ -20,6 +10,26 @@ export interface StrapiMedia {
   formats?: Record<string, { url: string; width: number; height: number }>;
 }
 
+export interface StrapiCategory {
+  id: number;
+  documentId: string;
+  name: string;
+  slug: string;
+  longDescription?: string | null;
+  publishedAt: string;
+}
+
+export interface StrapiTerritory {
+  id: number;
+  documentId: string;
+  name: string;
+  slug: string;
+  description: string;
+  phrase: string;
+  image?: StrapiMedia | null;
+  publishedAt: string;
+}
+
 export interface StrapiProject {
   id: number;
   documentId: string;
@@ -27,14 +37,13 @@ export interface StrapiProject {
   slug: string;
   description: string;
   longDescription?: string | null;
-  type: string;
-  territory: string;
+  type?: string | null;
+  territory?: string | null;
+  category?: Pick<StrapiCategory, "name" | "slug"> | null;
+  territoryRelation?: Pick<StrapiTerritory, "name" | "slug"> | null;
   featured?: boolean;
-  /** Richtext (HTML) com equipe e parceiros */
   partners?: string | null;
-  /** Data de início (YYYY-MM-DD) */
   startDate?: string | null;
-  /** Data de encerramento (YYYY-MM-DD) */
   endDate?: string | null;
   gallery?: StrapiMedia[] | null;
   publishedAt: string;
@@ -52,18 +61,8 @@ export interface StrapiHome {
   heroTitle: string;
   heroSubtitle?: string | null;
   heroImage?: StrapiMedia | null;
+  logo?: StrapiMedia | null;
   methods?: StrapiMethodItem[] | null;
-  publishedAt: string;
-}
-
-export interface StrapiTerritory {
-  id: number;
-  documentId: string;
-  name: string;
-  slug: string;
-  description: string;
-  phrase: string;
-  image?: StrapiMedia | null;
   publishedAt: string;
 }
 
@@ -71,16 +70,6 @@ interface StrapiListResponse<T> {
   data: T[];
   meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } };
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface StrapiSingleResponse<T> {
-  data: T;
-  meta: object;
-}
-
-// ---------------------------------------------------------------------------
-// Fetch helper
-// ---------------------------------------------------------------------------
 
 async function strapiGet<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(`${STRAPI_URL}/api${path}`);
@@ -90,7 +79,6 @@ async function strapiGet<T>(path: string, params?: Record<string, string>): Prom
 
   const res = await fetch(url.toString(), {
     headers: { "Content-Type": "application/json" },
-    // next.js revalidation — revalida a cada hora em produção
     next: { revalidate: 3600 },
   });
 
@@ -101,59 +89,94 @@ async function strapiGet<T>(path: string, params?: Record<string, string>): Prom
   return res.json() as Promise<T>;
 }
 
-// ---------------------------------------------------------------------------
-// Helpers de URL de mídia
-// ---------------------------------------------------------------------------
-
 export function mediaUrl(media: StrapiMedia | null | undefined): string | null {
   if (!media) return null;
-  const url = media.url;
-  // URLs absolutas (CDN externo) ficam como estão
-  if (url.startsWith("http")) return url;
-  return `${STRAPI_URL}${url}`;
+  if (media.url.startsWith("http")) return media.url;
+  return `${STRAPI_URL}${media.url}`;
 }
 
-// ---------------------------------------------------------------------------
-// Queries de projetos
-// ---------------------------------------------------------------------------
-
 export async function fetchProjects(params?: Record<string, string>): Promise<StrapiProject[]> {
-  const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
-    "populate[gallery]": "true",
-    "pagination[pageSize]": "100",
-    ...params,
-  });
-  return response.data;
+  try {
+    const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
+      "populate[gallery]": "true",
+      "populate[category]": "true",
+      "populate[territoryRelation]": "true",
+      "pagination[pageSize]": "100",
+      ...params,
+    });
+    return response.data;
+  } catch {
+    const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
+      "populate[gallery]": "true",
+      "pagination[pageSize]": "100",
+      ...params,
+    });
+    return response.data;
+  }
 }
 
 export async function fetchProjectBySlug(slug: string): Promise<StrapiProject | null> {
-  const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
-    "filters[slug][$eq]": slug,
-    "populate[gallery]": "true",
-  });
-  return response.data[0] ?? null;
+  try {
+    const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
+      "filters[slug][$eq]": slug,
+      "populate[gallery]": "true",
+      "populate[category]": "true",
+      "populate[territoryRelation]": "true",
+    });
+    return response.data[0] ?? null;
+  } catch {
+    const response = await strapiGet<StrapiListResponse<StrapiProject>>("/projects", {
+      "filters[slug][$eq]": slug,
+      "populate[gallery]": "true",
+    });
+    return response.data[0] ?? null;
+  }
 }
 
 export async function fetchFeaturedProjects(): Promise<StrapiProject[]> {
   return fetchProjects({ "filters[featured][$eq]": "true" });
 }
 
-export async function fetchProjectsByType(type: string): Promise<StrapiProject[]> {
-  return fetchProjects({ "filters[type][$eq]": type });
+export async function fetchProjectsByCategorySlug(slug: string): Promise<StrapiProject[]> {
+  try {
+    return await fetchProjects({ "filters[category][slug][$eq]": slug });
+  } catch {
+    return [];
+  }
 }
 
-export async function fetchProjectsByTerritory(territory: string): Promise<StrapiProject[]> {
-  return fetchProjects({ "filters[territory][$eq]": territory });
+export async function fetchProjectsByTerritorySlug(slug: string): Promise<StrapiProject[]> {
+  return fetchProjects({ "filters[territoryRelation][slug][$eq]": slug });
 }
 
-// ---------------------------------------------------------------------------
-// Queries da home
-// ---------------------------------------------------------------------------
+export async function fetchCategories(): Promise<StrapiCategory[]> {
+  try {
+    const response = await strapiGet<StrapiListResponse<StrapiCategory>>("/categories", {
+      "sort": "name:asc",
+      "pagination[pageSize]": "100",
+    });
+    return response.data;
+  } catch {
+    return [];
+  }
+}
+
+export async function fetchCategoryBySlug(slug: string): Promise<StrapiCategory | null> {
+  try {
+    const response = await strapiGet<StrapiListResponse<StrapiCategory>>("/categories", {
+      "filters[slug][$eq]": slug,
+    });
+    return response.data[0] ?? null;
+  } catch {
+    return null;
+  }
+}
 
 export async function fetchHome(): Promise<StrapiHome | null> {
   try {
     const response = await strapiGet<{ data: StrapiHome }>("/home", {
       "populate[heroImage]": "true",
+      "populate[logo]": "true",
       "populate[methods]": "true",
     });
     return response.data ?? null;
@@ -161,10 +184,6 @@ export async function fetchHome(): Promise<StrapiHome | null> {
     return null;
   }
 }
-
-// ---------------------------------------------------------------------------
-// Queries de territórios
-// ---------------------------------------------------------------------------
 
 export async function fetchTerritories(): Promise<StrapiTerritory[]> {
   const response = await strapiGet<StrapiListResponse<StrapiTerritory>>("/territories", {

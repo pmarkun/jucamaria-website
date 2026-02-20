@@ -29,27 +29,20 @@
       "type": "richtext"
     },
     "type": {
-      "type": "enumeration",
-      "enum": [
-        "arte",
-        "tecnologia",
-        "educacao",
-        "residencia",
-        "oficina",
-        "pesquisa",
-        "outro"
-      ],
-      "required": true
+      "type": "string"
     },
     "territory": {
-      "type": "enumeration",
-      "enum": [
-        "Florianópolis",
-        "Atibaia",
-        "Nordeste",
-        "Nacional"
-      ],
-      "required": true
+      "type": "string"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category"
+    },
+    "territoryRelation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::territory.territory"
     },
     "featured": {
       "type": "boolean",

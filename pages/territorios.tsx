@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
-import { getTerritories, getProjectsByTerritory } from "@/lib/data";
+import { getProjectsByTerritorySlug, getTerritories } from "@/lib/data";
 import type { TerritoryData, Project } from "@/types/project";
 
 interface TerritoriosPageProps {
@@ -39,7 +39,7 @@ export default function TerritoriosPage({
         <section
           key={territory.slug}
           id={territory.slug}
-          className={`py-20 ${index % 2 === 1 ? "bg-[#EDE9E0]" : ""}`}
+          className={`py-20 ${index % 2 === 1 ? "bg-[#FAFAF7]" : ""}`}
         >
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">
@@ -117,7 +117,7 @@ export async function getStaticProps() {
   const territoriesWithProjects = await Promise.all(
     allTerritories.map(async (t) => ({
       ...t,
-      projects: await getProjectsByTerritory(t.name),
+      projects: await getProjectsByTerritorySlug(t.slug),
     }))
   );
 

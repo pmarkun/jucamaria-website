@@ -13,13 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "enumeration",
-      "enum": [
-        "Florianópolis",
-        "Atibaia",
-        "Nordeste",
-        "Nacional"
-      ],
+      "type": "string",
       "required": true
     },
     "slug": {

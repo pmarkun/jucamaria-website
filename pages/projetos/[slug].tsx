@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
-import { PROJECT_TYPE_LABELS } from "@/types/project";
 import {
   getProjects,
   getProjectBySlug,
@@ -41,7 +40,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
 
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-xs font-medium px-2 py-1 bg-[#C65A3A]/10 text-[#C65A3A] rounded-sm">
-            {PROJECT_TYPE_LABELS[project.type]}
+            {project.type}
           </span>
           <span className="text-sm text-[#888]">{project.territory}</span>
         </div>
@@ -158,7 +157,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
 
       {/* ── Projetos relacionados ─────────── */}
       {related.length > 0 && (
-        <section className="bg-[#EDE9E0] py-16">
+        <section className="bg-[#FAFAF7] py-16">
           <div className="max-w-7xl mx-auto px-6">
             <h2
               style={{ fontFamily: "var(--font-lora, Lora, serif)" }}

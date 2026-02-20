@@ -24,6 +24,18 @@ const db = new Database(DB_PATH);
 // Strapi v5 armazena timestamps como milissegundos (número inteiro), não ISO string.
 const nowMs = Date.now();
 
+function hasColumn(table, column) {
+  const rows = db.prepare(`PRAGMA table_info(${table})`).all();
+  return rows.some((r) => r.name === column);
+}
+
+function hasTable(table) {
+  const row = db
+    .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?")
+    .get(table);
+  return Boolean(row);
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -49,7 +61,7 @@ function getAdminUserId() {
  * Ambos compartilham o mesmo document_id.
  * O admin panel lê os documentos pela versão draft; a API pública retorna a publicada.
  */
-function insertProject(p, adminId) {
+function insertProject(p, adminId, refs) {
   const existing = db
     .prepare("SELECT id FROM projects WHERE slug = ? AND published_at IS NULL")
     .get(p.slug);
@@ -60,16 +72,23 @@ function insertProject(p, adminId) {
 
   const docId = uuid();
 
+  const hasCategoryId = hasColumn("projects", "category_id");
+  const hasTerritoryRelationId = hasColumn("projects", "territory_relation_id");
+
   const stmt = db.prepare(`
     INSERT INTO projects (
       document_id, title, slug, description, long_description,
       type, territory, featured, partners,
       start_date, end_date,
+      ${hasCategoryId ? "category_id," : ""}
+      ${hasTerritoryRelationId ? "territory_relation_id," : ""}
       created_at, updated_at, published_at, created_by_id, updated_by_id
     ) VALUES (
       @document_id, @title, @slug, @description, @long_description,
       @type, @territory, @featured, @partners,
       @start_date, @end_date,
+      ${hasCategoryId ? "@category_id," : ""}
+      ${hasTerritoryRelationId ? "@territory_relation_id," : ""}
       @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
     )
   `);
@@ -86,6 +105,8 @@ function insertProject(p, adminId) {
     partners: p.partners ?? null,
     start_date: p.startDate ?? null,
     end_date: p.endDate ?? null,
+    category_id: refs.categoriesBySlug.get(p.categorySlug) ?? null,
+    territory_relation_id: refs.territoriesBySlug.get(p.territorySlug) ?? null,
     created_at: nowMs,
     updated_at: nowMs,
     created_by_id: adminId,
@@ -99,6 +120,47 @@ function insertProject(p, adminId) {
   const result = stmt.run({ ...common, published_at: nowMs });
 
   console.log(`  ✓  projeto criado: ${p.slug} (document_id=${docId})`);
+  return result.lastInsertRowid;
+}
+
+function insertCategory(c, adminId) {
+  if (!hasTable("categories")) {
+    console.log("  ⚠  tabela categories não existe ainda (reinicie o Strapi após mudar schema)");
+    return null;
+  }
+  const existing = db
+    .prepare("SELECT id FROM categories WHERE slug = ? AND published_at IS NULL")
+    .get(c.slug);
+  if (existing) {
+    console.log(`  ⏭  categoria já existe: ${c.slug}`);
+    return existing.id;
+  }
+
+  const docId = uuid();
+  const stmt = db.prepare(`
+    INSERT INTO categories (
+      document_id, name, slug, long_description,
+      created_at, updated_at, published_at, created_by_id, updated_by_id
+    ) VALUES (
+      @document_id, @name, @slug, @long_description,
+      @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
+    )
+  `);
+
+  const common = {
+    document_id: docId,
+    name: c.name,
+    slug: c.slug,
+    long_description: c.longDescription ?? null,
+    created_at: nowMs,
+    updated_at: nowMs,
+    created_by_id: adminId,
+    updated_by_id: adminId,
+  };
+
+  stmt.run({ ...common, published_at: null });
+  const result = stmt.run({ ...common, published_at: nowMs });
+  console.log(`  ✓  categoria criada: ${c.slug} (document_id=${docId})`);
   return result.lastInsertRowid;
 }
 
@@ -239,8 +301,10 @@ const projects = [
 Durante seis semanas, trinta jovens entre 8 e 14 anos construíram instrumentos com garrafas PET, latas, elásticos e bambu. Cada instrumento ganhou nome, história e um repertório próprio. O processo culminou em uma apresentação aberta ao bairro — não um espetáculo, mas uma mostra do que foi aprendido e inventado.
 
 O laboratório revelou que a música pode ser um ponto de entrada para a autonomia criativa: quem faz o instrumento, decide o som; quem decide o som, passa a escutar o mundo de outro jeito.`,
-    type: "oficina",
+    type: "Oficina",
     territory: "Florianópolis",
+    categorySlug: "oficinas",
+    territorySlug: "florianopolis",
     featured: true,
     startDate: "2024-04-01",
     endDate: "2024-05-12",
@@ -256,8 +320,10 @@ O laboratório revelou que a música pode ser um ponto de entrada para a autonom
 O projeto partiu de uma questão: como o território fala? E como nós aprendemos a escutá-lo?
 
 Cada residente desenvolveu um trabalho autoral a partir da experiência de imersão: caminhadas, conversas com moradores, registros sonoros da mata, da chuva, dos animais. O processo gerou uma publicação coletiva e uma exposição itinerante que circulou por três cidades.`,
-    type: "residencia",
+    type: "Residências",
     territory: "Atibaia",
+    categorySlug: "residencias",
+    territorySlug: "atibaia",
     featured: true,
     startDate: "2024-03-01",
     endDate: "2024-04-30",
@@ -273,11 +339,34 @@ Cada residente desenvolveu um trabalho autoral a partir da experiência de imers
 Em quatro meses, jovens entre 16 e 25 anos produziram um podcast sobre a vida na pesca artesanal, um documentário curto sobre técnicas tradicionais de tecelagem de rede, e um perfil coletivo nas redes sociais que já reúne mais de 3.000 seguidores.
 
 O projeto não ensina tecnologia como fim. Ensina tecnologia como linguagem — uma forma de fazer a voz chegar mais longe.`,
-    type: "tecnologia",
+    type: "Tecnologia",
     territory: "Nordeste",
+    categorySlug: "tecnologia",
+    territorySlug: "nordeste",
     featured: true,
     startDate: "2024-06-01",
     partners: `**Equipe**\n- Joana Ferreira — Coordenação do programa\n- Lucas Alves — Formação em vídeo e podcast\n- Sofia Mendes — Formação em fotografia\n\n**Parceiros**\n- Associação de Pescadores de Trairi\n- Colônia de Pesca Z-6\n- Governo do Estado do Ceará — Secult`,
+  },
+];
+
+const categories = [
+  {
+    slug: "residencias",
+    name: "Residências",
+    longDescription:
+      "Tempo longo de imersão em território. Artistas, pesquisadores e educadores vivem e trabalham juntos por semanas, com produção coletiva e partilha pública.",
+  },
+  {
+    slug: "oficinas",
+    name: "Oficinas",
+    longDescription:
+      "Experiências formativas de curta e média duração voltadas para criação, repertório e troca entre participantes.",
+  },
+  {
+    slug: "tecnologia",
+    name: "Tecnologia",
+    longDescription:
+      "Projetos de cultura digital, comunicação e ferramentas criativas aplicadas a contextos comunitários.",
   },
 ];
 
@@ -327,6 +416,8 @@ function ensurePublicPermissions() {
     "api::project.project.findOne",
     "api::territory.territory.find",
     "api::territory.territory.findOne",
+    "api::category.category.find",
+    "api::category.category.findOne",
     "api::home.home.find",
   ];
 
@@ -381,13 +472,25 @@ console.log("\nHome:");
 insertHome(adminId);
 
 console.log("\nTerritórios:");
+const territoryRefs = new Map();
 for (const t of territories) {
-  insertTerritory(t, adminId);
+  const id = insertTerritory(t, adminId);
+  territoryRefs.set(t.slug, Number(id));
+}
+
+console.log("\nCategorias:");
+const categoryRefs = new Map();
+for (const c of categories) {
+  const id = insertCategory(c, adminId);
+  categoryRefs.set(c.slug, Number(id));
 }
 
 console.log("\nProjetos:");
 for (const p of projects) {
-  insertProject(p, adminId);
+  insertProject(p, adminId, {
+    categoriesBySlug: categoryRefs,
+    territoriesBySlug: territoryRefs,
+  });
 }
 
 db.close();

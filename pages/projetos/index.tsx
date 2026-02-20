@@ -14,7 +14,7 @@ export default function ProjectsPage({ projects }: ProjectsPageProps) {
       description="A Juca Maria existe através dos projetos. Conheça as oficinas, laboratórios e ações culturais em todo o Brasil."
     >
       {/* Header */}
-      <section className="bg-[#EDE9E0] py-20 px-6">
+      <section className="bg-[#FAFAF7] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
             Portfólio
@@ -41,8 +41,7 @@ export default function ProjectsPage({ projects }: ProjectsPageProps) {
 
 export async function getStaticProps() {
   const all = await getProjects();
-  // Residências têm página própria em /vivencias
-  const projects = all.filter((p) => p.type !== "residencia");
+  const projects = all.filter((p) => p.categorySlug !== "residencias" && p.type.toLowerCase() !== "residencia");
   return {
     props: {
       projects,
