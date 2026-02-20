@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useMemo } from "react";
 import type { Project, ProjectType } from "@/types/project";
 import { PROJECT_TYPE_LABELS } from "@/types/project";
