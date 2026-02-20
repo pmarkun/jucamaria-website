@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import ProjectGrid from "@/components/project/ProjectGrid";
 import type { Project } from "@/types/project";
-import { projects } from "@/lib/data";
+import { getProjects } from "@/lib/data";
 
 interface ProjectsPageProps {
   projects: Project[];
@@ -40,6 +40,7 @@ export default function ProjectsPage({ projects }: ProjectsPageProps) {
 }
 
 export async function getStaticProps() {
+  const projects = await getProjects();
   return {
     props: {
       projects,

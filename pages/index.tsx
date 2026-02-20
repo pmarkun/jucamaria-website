@@ -2,7 +2,7 @@ import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
 import type { Project, TerritoryData } from "@/types/project";
-import { getFeaturedProjects, territories } from "@/lib/data";
+import { getFeaturedProjects, getTerritories } from "@/lib/data";
 
 interface HomeProps {
   featuredProjects: Project[];
@@ -312,11 +312,12 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
 }
 
 export async function getStaticProps() {
-  const featuredProjects = getFeaturedProjects();
+  const featuredProjects = await getFeaturedProjects();
+  const territoriesData = await getTerritories();
   return {
     props: {
       featuredProjects,
-      territoriesData: territories,
+      territoriesData,
     },
   };
 }

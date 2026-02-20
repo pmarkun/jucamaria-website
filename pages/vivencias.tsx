@@ -176,8 +176,8 @@ export default function VivenciasPage({
 export async function getStaticProps() {
   return {
     props: {
-      residencias: getProjectsByType("residencia"),
-      oficinas: getProjectsByType("oficina"),
+      residencias: await getProjectsByType("residencia"),
+      oficinas: await getProjectsByType("oficina"),
     },
   };
 }

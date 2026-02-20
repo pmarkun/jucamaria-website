@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
 import { PROJECT_TYPE_LABELS } from "@/types/project";
 import {
-  projects,
+  getProjects,
   getProjectBySlug,
   getRelatedProjects,
 } from "@/lib/data";
@@ -195,19 +195,20 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = projects.map((p) => ({ params: { slug: p.slug } }));
+  const all = await getProjects();
+  const paths = all.map((p) => ({ params: { slug: p.slug } }));
   return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return { notFound: true };
   }
 
-  const related = getRelatedProjects(project);
+  const related = await getRelatedProjects(project);
 
   return {
     props: { project, related },

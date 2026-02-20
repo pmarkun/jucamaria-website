@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
-import { territories, getProjectsByTerritory } from "@/lib/data";
+import { getTerritories, getProjectsByTerritory } from "@/lib/data";
 import type { TerritoryData, Project } from "@/types/project";
 
 interface TerritoriosPageProps {
@@ -113,10 +113,13 @@ export default function TerritoriosPage({
 }
 
 export async function getStaticProps() {
-  const territoriesWithProjects = territories.map((t) => ({
-    ...t,
-    projects: getProjectsByTerritory(t.name),
-  }));
+  const allTerritories = await getTerritories();
+  const territoriesWithProjects = await Promise.all(
+    allTerritories.map(async (t) => ({
+      ...t,
+      projects: await getProjectsByTerritory(t.name),
+    }))
+  );
 
   return {
     props: { territoriesWithProjects },
