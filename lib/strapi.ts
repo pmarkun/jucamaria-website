@@ -32,6 +32,10 @@ export interface StrapiProject {
   featured?: boolean;
   /** Richtext (HTML) com equipe e parceiros */
   partners?: string | null;
+  /** Data de início (YYYY-MM-DD) */
+  startDate?: string | null;
+  /** Data de encerramento (YYYY-MM-DD) */
+  endDate?: string | null;
   gallery?: StrapiMedia[] | null;
   publishedAt: string;
 }

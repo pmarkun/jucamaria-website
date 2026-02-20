@@ -26,11 +26,13 @@ function adaptProject(raw: StrapiProject): Project {
     slug: raw.slug,
     title: raw.title,
     description: raw.description,
-    longDescription: raw.longDescription ?? undefined,
+    longDescription: raw.longDescription ?? null,
     type: raw.type as ProjectType,
     territory: raw.territory as Territory,
     featured: raw.featured ?? false,
-    partners: raw.partners ?? undefined,
+    partners: raw.partners ?? null,
+    startDate: raw.startDate ?? null,
+    endDate: raw.endDate ?? null,
     gallery,
   };
 }

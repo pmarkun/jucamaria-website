@@ -64,10 +64,12 @@ function insertProject(p, adminId) {
     INSERT INTO projects (
       document_id, title, slug, description, long_description,
       type, territory, featured, partners,
+      start_date, end_date,
       created_at, updated_at, published_at, created_by_id, updated_by_id
     ) VALUES (
       @document_id, @title, @slug, @description, @long_description,
       @type, @territory, @featured, @partners,
+      @start_date, @end_date,
       @created_at, @updated_at, @published_at, @created_by_id, @updated_by_id
     )
   `);
@@ -82,6 +84,8 @@ function insertProject(p, adminId) {
     territory: p.territory,
     featured: p.featured ? 1 : 0,
     partners: p.partners ?? null,
+    start_date: p.startDate ?? null,
+    end_date: p.endDate ?? null,
     created_at: nowMs,
     updated_at: nowMs,
     created_by_id: adminId,
@@ -161,6 +165,8 @@ O laboratório revelou que a música pode ser um ponto de entrada para a autonom
     type: "oficina",
     territory: "Florianópolis",
     featured: true,
+    startDate: "2024-04-01",
+    endDate: "2024-05-12",
     partners: `**Equipe**\n- Ana Vieira — Coordenação pedagógica\n- Thiago Melo — Facilitação musical\n- Cláudia Ramos — Produção\n\n**Parceiros**\n- Escola Municipal Henrique Veras\n- Associação de Moradores Saco dos Limões`,
   },
   {
@@ -176,6 +182,8 @@ Cada residente desenvolveu um trabalho autoral a partir da experiência de imers
     type: "residencia",
     territory: "Atibaia",
     featured: true,
+    startDate: "2024-03-01",
+    endDate: "2024-04-30",
     partners: `**Equipe**\n- Beatriz Fontes — Curadoria e coordenação\n- Rafael Souza — Facilitação do processo\n- Marina Costa — Produção e logística\n\n**Parceiros**\n- Fazenda Boa Vista\n- Secretaria de Cultura de Atibaia\n- Coletivo Margem`,
   },
   {
@@ -191,6 +199,7 @@ O projeto não ensina tecnologia como fim. Ensina tecnologia como linguagem — 
     type: "tecnologia",
     territory: "Nordeste",
     featured: true,
+    startDate: "2024-06-01",
     partners: `**Equipe**\n- Joana Ferreira — Coordenação do programa\n- Lucas Alves — Formação em vídeo e podcast\n- Sofia Mendes — Formação em fotografia\n\n**Parceiros**\n- Associação de Pescadores de Trairi\n- Colônia de Pesca Z-6\n- Governo do Estado do Ceará — Secult`,
   },
 ];

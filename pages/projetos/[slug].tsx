@@ -111,6 +111,30 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
 
         {/* Sidebar */}
         <aside className="flex flex-col gap-10">
+          {/* Período */}
+          {(project.startDate || project.endDate) && (
+            <div>
+              <h2 className="text-xs uppercase tracking-widest text-[#888] font-medium mb-4">
+                Período
+              </h2>
+              <p className="text-sm text-[#555]">
+                {project.startDate
+                  ? new Date(project.startDate + "T00:00:00").toLocaleDateString("pt-BR", {
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : "—"}
+                {" até "}
+                {project.endDate
+                  ? new Date(project.endDate + "T00:00:00").toLocaleDateString("pt-BR", {
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : "em andamento"}
+              </p>
+            </div>
+          )}
+
           {/* Parceiros & Equipe */}
           {project.partners && (
             <div>

@@ -19,13 +19,17 @@ export interface Project {
   slug: string;
   title: string;
   description: string;
-  longDescription?: string;
+  longDescription?: string | null;
   type: ProjectType;
   territory: Territory;
   gallery: GalleryImage[];
   featured?: boolean;
   /** Markdown/HTML com equipe e parceiros, gerado pelo WYSIWYG do CMS */
-  partners?: string;
+  partners?: string | null;
+  /** Data de início do projeto (YYYY-MM-DD) */
+  startDate?: string | null;
+  /** Data de encerramento do projeto (YYYY-MM-DD) */
+  endDate?: string | null;
 }
 
 export interface TerritoryData {

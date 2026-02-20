@@ -58,6 +58,12 @@
     "partners": {
       "type": "richtext"
     },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
     "gallery": {
       "type": "media",
       "multiple": true,
