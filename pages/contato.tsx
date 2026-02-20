@@ -1,6 +1,5 @@
-"use client";
-
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
+import { useRouter } from "next/router";
 import Layout from "@/components/layout/Layout";
 
 type Assunto = "parceria" | "territorio" | "imprensa" | "";
@@ -26,9 +25,19 @@ const ASSUNTOS = [
   },
 ];
 
+const VALID_ASSUNTOS: Assunto[] = ["parceria", "territorio", "imprensa"];
+
 export default function ContatoPage() {
+  const router = useRouter();
   const [assunto, setAssunto] = useState<Assunto>("");
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const { assunto: queryAssunto } = router.query;
+    if (typeof queryAssunto === "string" && VALID_ASSUNTOS.includes(queryAssunto as Assunto)) {
+      setAssunto(queryAssunto as Assunto);
+    }
+  }, [router.query]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
