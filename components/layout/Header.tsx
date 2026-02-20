@@ -4,7 +4,7 @@ import { useState } from "react";
 const navLinks = [
   { href: "/projetos", label: "Projetos" },
   { href: "/territorios", label: "Territórios" },
-  { href: "/vivencias", label: "Residências & Oficinas" },
+  { href: "/vivencias", label: "Residências" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];
@@ -42,12 +42,6 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/contato"
-            className="text-sm px-4 py-1.5 border border-[#2F4E6F] text-[#2F4E6F] hover:bg-[#2F4E6F] hover:text-[#F2EFE8] transition-colors rounded-sm font-medium"
-          >
-            Propor parceria
-          </Link>
         </nav>
 
         {/* Mobile menu button */}
@@ -82,13 +76,6 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/contato"
-              onClick={() => setMenuOpen(false)}
-              className="text-sm px-4 py-2 border border-[#2F4E6F] text-[#2F4E6F] hover:bg-[#2F4E6F] hover:text-[#F2EFE8] transition-colors rounded-sm font-medium text-center mt-2"
-            >
-              Propor parceria
-            </Link>
           </nav>
         </div>
       )}

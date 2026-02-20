@@ -1,54 +1,5 @@
 import Layout from "@/components/layout/Layout";
 
-const colegiado = [
-  {
-    name: "Ana Vieira",
-    role: "Coordenação pedagógica e processos formativos",
-    city: "Florianópolis — SC",
-  },
-  {
-    name: "Beatriz Fontes",
-    role: "Curadoria e produção cultural",
-    city: "Atibaia — SP",
-  },
-  {
-    name: "Rafael Souza",
-    role: "Facilitação de processos criativos",
-    city: "Atibaia — SP",
-  },
-  {
-    name: "Joana Ferreira",
-    role: "Coordenação de programas territoriais",
-    city: "Fortaleza — CE",
-  },
-  {
-    name: "Lucas Alves",
-    role: "Formação em tecnologia e comunicação",
-    city: "Fortaleza — CE",
-  },
-  {
-    name: "Marina Costa",
-    role: "Produção e logística",
-    city: "Florianópolis — SC",
-  },
-  {
-    name: "Sofia Mendes",
-    role: "Fotografia e documentação",
-    city: "Florianópolis — SC",
-  },
-];
-
-const parceiros = [
-  "Escola Municipal Henrique Veras",
-  "Secretaria de Cultura de Atibaia",
-  "Colônia de Pesca Z-6",
-  "Coletivo Margem",
-  "Associação de Pescadores de Trairi",
-  "Associação de Moradores Saco dos Limões",
-  "Fazenda Boa Vista",
-  "Governo do Estado do Ceará — Secult",
-];
-
 export default function SobrePage() {
   return (
     <Layout
@@ -186,35 +137,6 @@ export default function SobrePage() {
         </div>
       </section>
 
-      {/* Colegiado */}
-      <section id="colegiado" className="py-20 max-w-7xl mx-auto px-6">
-        <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
-          Pessoas
-        </p>
-        <h2
-          style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
-          className="text-3xl font-semibold text-[#2B2B2B] mb-10"
-        >
-          Colegiado
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {colegiado.map((person) => (
-            <div key={person.name} className="border-b border-[#D8D3CA] pb-6">
-              <h3
-                style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
-                className="text-lg font-semibold text-[#2B2B2B] mb-1"
-              >
-                {person.name}
-              </h3>
-              <p className="text-sm text-[#555] mb-1">{person.role}</p>
-              <p className="text-xs text-[#888] uppercase tracking-wide">
-                {person.city}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Parceiros */}
       <section className="bg-[#EDE9E0] py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -228,7 +150,16 @@ export default function SobrePage() {
             Parceiros
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {parceiros.map((p) => (
+            {[
+              "Escola Municipal Henrique Veras",
+              "Secretaria de Cultura de Atibaia",
+              "Colônia de Pesca Z-6",
+              "Coletivo Margem",
+              "Associação de Pescadores de Trairi",
+              "Associação de Moradores Saco dos Limões",
+              "Fazenda Boa Vista",
+              "Governo do Estado do Ceará — Secult",
+            ].map((p) => (
               <div
                 key={p}
                 className="bg-[#F2EFE8] border border-[#D8D3CA] px-4 py-3 text-sm text-[#555] text-center"

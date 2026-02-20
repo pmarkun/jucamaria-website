@@ -11,7 +11,7 @@ export default function ProjectsPage({ projects }: ProjectsPageProps) {
   return (
     <Layout
       title="Projetos"
-      description="A Juca Maria existe através dos projetos. Conheça as oficinas, residências, laboratórios e ações culturais em todo o Brasil."
+      description="A Juca Maria existe através dos projetos. Conheça as oficinas, laboratórios e ações culturais em todo o Brasil."
     >
       {/* Header */}
       <section className="bg-[#EDE9E0] py-20 px-6">
@@ -40,7 +40,9 @@ export default function ProjectsPage({ projects }: ProjectsPageProps) {
 }
 
 export async function getStaticProps() {
-  const projects = await getProjects();
+  const all = await getProjects();
+  // Residências têm página própria em /vivencias
+  const projects = all.filter((p) => p.type !== "residencia");
   return {
     props: {
       projects,
