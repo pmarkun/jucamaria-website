@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
@@ -46,12 +45,11 @@ export default function TerritoriosPage({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={territory.image}
                   alt={territory.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full h-full object-cover"
                 />
               </div>
 

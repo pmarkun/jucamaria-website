@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Project } from "@/types/project";
 import { PROJECT_TYPE_LABELS } from "@/types/project";
 
@@ -26,12 +25,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden">
           {coverImage ? (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={coverImage.src}
               alt={coverImage.alt}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
             <div className="w-full h-full bg-[#D8D3CA]" />

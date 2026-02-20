@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
@@ -62,25 +61,22 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Imagem principal — ocupa 2 colunas */}
             <div className="md:col-span-2 relative aspect-[16/10] overflow-hidden">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={hero.src}
                 alt={hero.alt}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, 66vw"
+                className="w-full h-full object-cover"
               />
             </div>
             {/* Imagens secundárias */}
             <div className="grid grid-rows-2 gap-3">
               {rest.slice(0, 2).map((img) => (
                 <div key={img.src} className="relative overflow-hidden">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={img.src}
                     alt={img.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               ))}
@@ -92,12 +88,11 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
             {rest.slice(2).map((img) => (
               <div key={img.src} className="relative aspect-square overflow-hidden">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={img.src}
                   alt={img.alt}
-                  fill
-                  className="object-cover"
-                  sizes="25vw"
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
@@ -17,14 +16,13 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
       <section className="relative min-h-[90vh] flex items-end overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=1800&q=85"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/placeholders/hero.svg"
             alt="Oficina de arte com pessoas trabalhando"
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/90 via-[#2B2B2B]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/85 via-[#2B2B2B]/20 to-[#1C2B3A]/30" />
         </div>
 
         {/* Content */}
@@ -114,26 +112,27 @@ export default function Home({ featuredProjects, territoriesData }: HomeProps) {
               <Link
                 key={territory.slug}
                 href={`/territorios#${territory.slug}`}
-                className="group relative overflow-hidden aspect-[3/4] block"
+                className="group block"
               >
-                <Image
-                  src={territory.image}
-                  alt={territory.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/80 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3
-                    style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
-                    className="text-xl font-semibold text-[#F2EFE8] mb-1"
-                  >
-                    {territory.name}
-                  </h3>
-                  <p className="text-xs text-[#D8D3CA] uppercase tracking-wider">
-                    {territory.phrase}
-                  </p>
+                <div className="relative overflow-hidden" style={{ paddingBottom: "133.33%" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={territory.image}
+                    alt={territory.name}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-6">
+                    <h3
+                      style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
+                      className="text-xl font-semibold text-[#F2EFE8] mb-1"
+                    >
+                      {territory.name}
+                    </h3>
+                    <p className="text-xs text-[#D8D3CA] uppercase tracking-wider">
+                      {territory.phrase}
+                    </p>
+                  </div>
                 </div>
               </Link>
             ))}
