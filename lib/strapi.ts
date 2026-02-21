@@ -1,4 +1,28 @@
+import fs from "node:fs";
+import path from "node:path";
+
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
+
+let localAssetMap: Record<string, string> | null = null;
+
+function getLocalAssetMap(): Record<string, string> {
+  if (localAssetMap) return localAssetMap;
+  if (typeof window !== "undefined") {
+    localAssetMap = {};
+    return localAssetMap;
+  }
+
+  try {
+    const manifestPath = path.join(process.cwd(), "public", "_cms", "manifest.json");
+    const raw = fs.readFileSync(manifestPath, "utf8");
+    const json = JSON.parse(raw);
+    localAssetMap = json.items ?? {};
+  } catch {
+    localAssetMap = {};
+  }
+
+  return localAssetMap ?? {};
+}
 
 export interface StrapiMedia {
   id: number;
@@ -91,8 +115,9 @@ async function strapiGet<T>(path: string, params?: Record<string, string>): Prom
 
 export function mediaUrl(media: StrapiMedia | null | undefined): string | null {
   if (!media) return null;
-  if (media.url.startsWith("http")) return media.url;
-  return `${STRAPI_URL}${media.url}`;
+  const absolute = media.url.startsWith("http") ? media.url : `${STRAPI_URL}${media.url}`;
+  const mapped = getLocalAssetMap()[absolute];
+  return mapped ?? absolute;
 }
 
 export async function fetchProjects(params?: Record<string, string>): Promise<StrapiProject[]> {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const navLinks = [
   { href: "/projetos", label: "Projetos" },
@@ -16,11 +17,25 @@ function getStrapiBaseUrl() {
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const controller = new AbortController();
     async function loadLogo() {
       try {
+        const base = router.basePath || "";
+        const manifestRes = await fetch(`${base}/_cms/manifest.json`, {
+          signal: controller.signal,
+        });
+        if (manifestRes.ok) {
+          const manifest = await manifestRes.json();
+          const localLogo = manifest?.home?.logo as string | undefined;
+          if (localLogo) {
+            setLogoUrl(localLogo);
+            return;
+          }
+        }
+
         const res = await fetch(`${getStrapiBaseUrl()}/api/home?populate[logo]=true`, {
           signal: controller.signal,
         });
@@ -35,7 +50,7 @@ export default function Header() {
     }
     loadLogo();
     return () => controller.abort();
-  }, []);
+  }, [router.basePath]);
 
   return (
     <header
