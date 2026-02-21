@@ -9,19 +9,9 @@ interface CategoryPageProps {
   projects: Project[];
 }
 
-const RESERVED_SLUGS = new Set([
-  "projetos",
-  "territorios",
-  "sobre",
-  "contato",
-  "vivencias",
-  "api",
-  "favicon.ico",
-]);
-
 export default function CategoryPage({ category, projects }: CategoryPageProps) {
   return (
-    <Layout title={category.name} description={`Conheça os projetos da categoria ${category.name}.`}>
+    <Layout title={category.name} description={`Conheca os projetos da categoria ${category.name}.`}>
       <section className="bg-[#FAFAF7] py-20 px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
@@ -59,23 +49,16 @@ export default function CategoryPage({ category, projects }: CategoryPageProps) 
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const categories = await getCategories();
-  const paths = categories
-    .filter((cat) => !RESERVED_SLUGS.has(cat.slug))
-    .map((cat) => ({ params: { slug: cat.slug } }));
-
+  const paths = categories.map((cat) => ({ params: { slug: cat.slug } }));
   return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
-  if (!slug || RESERVED_SLUGS.has(slug)) {
-    return { notFound: true };
-  }
+  if (!slug) return { notFound: true };
 
   const category = await getCategoryBySlug(slug);
-  if (!category) {
-    return { notFound: true };
-  }
+  if (!category) return { notFound: true };
 
   const projects = await getProjectsByCategorySlug(slug);
   return { props: { category, projects } };

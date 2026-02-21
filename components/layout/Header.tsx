@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const navLinks = [
   { href: "/projetos", label: "Projetos" },
   { href: "/territorios", label: "Territórios" },
-  { href: "/residencias", label: "Residências" },
+  { href: "/c/residencias", label: "Residências" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];
@@ -45,12 +45,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center leading-none group min-w-[170px]">
           {logoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={logoUrl}
-              alt="Juca Maria"
-              className="h-10 w-auto object-contain"
-            />
+            <div className="relative h-10 w-[180px] max-w-[45vw]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={logoUrl}
+                alt="Juca Maria"
+                className="absolute inset-0 w-full h-full object-contain object-left"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
           ) : (
             <div className="flex flex-col">
               <span

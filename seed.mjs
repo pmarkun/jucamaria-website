@@ -72,20 +72,23 @@ function insertProject(p, adminId, refs) {
 
   const docId = uuid();
 
+  const hasType = hasColumn("projects", "type");
   const hasCategoryId = hasColumn("projects", "category_id");
   const hasTerritoryRelationId = hasColumn("projects", "territory_relation_id");
 
   const stmt = db.prepare(`
     INSERT INTO projects (
       document_id, title, slug, description, long_description,
-      type, territory, featured, partners,
+      ${hasType ? "type," : ""}
+      territory, featured, partners,
       start_date, end_date,
       ${hasCategoryId ? "category_id," : ""}
       ${hasTerritoryRelationId ? "territory_relation_id," : ""}
       created_at, updated_at, published_at, created_by_id, updated_by_id
     ) VALUES (
       @document_id, @title, @slug, @description, @long_description,
-      @type, @territory, @featured, @partners,
+      ${hasType ? "@type," : ""}
+      @territory, @featured, @partners,
       @start_date, @end_date,
       ${hasCategoryId ? "@category_id," : ""}
       ${hasTerritoryRelationId ? "@territory_relation_id," : ""}

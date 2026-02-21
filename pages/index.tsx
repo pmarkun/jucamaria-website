@@ -83,7 +83,7 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
             </Link>
             <Link
               href="/sobre"
-              className="inline-block px-8 py-3 border border-[#F2EFE8]/60 text-[#F2EFE8] text-sm font-medium hover:bg-[#FAFAF7]/10 transition-colors"
+              className="inline-block px-8 py-3 border border-[#FAFAF7] bg-[#FAFAF7] text-[#2B2B2B] text-sm font-medium hover:bg-[#E9E9E3] transition-colors"
             >
               Conhecer a organização
             </Link>

@@ -28,9 +28,6 @@
     "longDescription": {
       "type": "richtext"
     },
-    "type": {
-      "type": "string"
-    },
     "territory": {
       "type": "string"
     },

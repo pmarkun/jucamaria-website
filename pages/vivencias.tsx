@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 export default function VivenciasLegacyPage() {
   const router = useRouter();
   useEffect(() => {
-    router.replace("/residencias");
+    router.replace("/c/residencias");
   }, [router]);
   return null;
 }
