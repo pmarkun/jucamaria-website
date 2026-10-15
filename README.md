@@ -1,44 +1,72 @@
-This is a Next.js project bootstrapped with [`create-plasmic-app`](https://www.npmjs.com/package/create-plasmic-app).
+# Juca Maria
 
-## Languages
+Site estático em português e inglês. Textos, imagens e fontes ficam neste
+repositório. Não é necessário iniciar um CMS, configurar `.env.local` ou acessar
+uma API para desenvolver, gerar ou visitar o site.
 
-Portuguese remains at `/`; English is available at `/en/`. The PT/EN selector
-keeps the current page, query and anchor. Internal navigation stays in the selected
-language, including project and category pages. Both versions are exported as
-static HTML for GitHub Pages; no translation service or new dependency is needed.
+## Rodar localmente
 
-English pages reuse the Portuguese page components through `pages/en/` exports.
-Interface copy and the current CMS content are translated in
-`lib/translations/en.json`. When editing or adding CMS text, add its English
-translation there too. Unknown text falls back to the original Portuguese;
-project titles, people's names and partner organizations keep their original names.
-URLs, slugs and dates are never translated. Adding another language requires a
-new dictionary, static route exports and an option in the language selector.
+Com as dependências já instaladas:
 
-Validate with `nix develop --command node --test scripts/i18n.test.cjs`,
-`nix develop --command npm run lint` and `nix develop --command npm run build`.
-The build needs access to the CMS configured in `NEXT_PUBLIC_STRAPI_URL`.
-
-## Development
-
-First, run the development server:
-
-```bash
-npm run dev
+```sh
+nix develop --command npm run dev
 ```
 
-Open your browser to see the result.
+Abra `http://localhost:3000`. Em uma instalação nova, rode primeiro
+`nix develop --command npm ci`; essa instalação inicial precisa de internet.
 
-You can start editing your project in Plasmic Studio. The page auto-updates as you edit the project.
+## Editar conteúdo
 
-## Learn More
+- `content/home.json`: chamada da página inicial, logo, capa e método.
+- `content/projects.json`: projetos, galeria, datas, equipe e parceiros.
+- `content/territories.json`: territórios de atuação.
+- `content/categories.json`: categorias dos projetos.
+- `public/images/content/`: imagens utilizadas pelo conteúdo.
+- `public/fonts/`: fontes locais Lora e Inter, com suas licenças OFL.
+- `pages/`: textos institucionais e estrutura das páginas.
 
-With Plasmic, you can enable non-developers on your team to publish pages and content into your website or app.
+Imagens usam caminhos como `/images/content/capa.jpg`, sem domínio ou prefixo do
+GitHub. O site aplica o prefixo de publicação automaticamente. `categorySlug` e
+`territorySlug` devem apontar para registros existentes; `categorySlug: null`
+mantém um projeto sem categoria. Os registros e imagens públicos vieram do CMS
+local existente. Os textos e nomes foram preservados.
 
-To learn more about Plasmic, take a look at the following resources:
+Português fica em `/`; inglês em `/en/`. O seletor PT/EN mantém a página,
+os parâmetros e a âncora. As traduções estão em `lib/translations/en.json`.
+Ao editar um texto em português, atualize sua tradução nesse catálogo.
+Texto sem tradução usa o original; nomes de projetos, pessoas e organizações
+permanecem no original. URLs, identificadores e datas não são traduzidos.
 
-- [Plasmic Website](https://www.plasmic.app/)
-- [Plasmic Documentation](https://docs.plasmic.app/learn/)
-- [Plasmic Community Forum](https://forum.plasmic.app/)
+## Validar e gerar
 
-You can check out [the Plasmic GitHub repository](https://github.com/plasmicapp/plasmic) - your feedback and contributions are welcome!
+```sh
+nix develop --command npm test
+nix develop --command npm run lint
+nix develop --command npm run build
+```
+
+O resultado pronto para hospedagem fica em `out/`. Para provar que a geração
+não depende de rede, use o mesmo bloqueio adotado na publicação:
+
+```sh
+NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS='--require=./scripts/no-network.cjs' nix develop --command npm run build
+```
+
+## Publicar
+
+O workflow do GitHub Pages instala as dependências, executa os testes e gera o
+site usando somente os arquivos do repositório. Durante a geração, conexões de
+rede estão bloqueadas. Não há variável, secret ou serviço Strapi envolvido.
+O GitHub e o registro de pacotes continuam necessários para enviar o código,
+instalar dependências numa máquina nova e hospedar os arquivos prontos.
+
+Depois do merge em `main`, o workflow publica automaticamente em
+`https://pmarkun.github.io/jucamaria-website/`. A versão inglesa fica em `/en/`.
+
+## Arquivos antigos
+
+A pasta `strapi/` e o script `seed.mjs` foram preservados como histórico da
+configuração anterior. Não participam do site, dos testes ou da publicação.
+O banco local, os arquivos de ambiente e os lockfiles com alterações anteriores
+não foram apagados nem publicados. O antigo cache em `public/_cms/` também não
+é utilizado; nenhuma dessas pastas é necessária em uma cópia nova do site.

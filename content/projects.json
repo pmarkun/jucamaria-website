@@ -1,0 +1,59 @@
+[
+  {
+    "slug": "tecendo-redes",
+    "title": "Tecendo Redes",
+    "description": "Programa de formação em tecnologia e comunicação digital para jovens de comunidades pesqueiras do litoral do Ceará.",
+    "longDescription": "Tecendo Redes surgiu de uma parceria com associações de pescadores e pescadoras do litoral do Ceará. O programa oferece formação em fotografia com celular, produção de vídeo, podcast e gestão de redes sociais — ferramentas para que as comunidades contem suas próprias histórias.\n\nEm quatro meses, jovens entre 16 e 25 anos produziram um podcast sobre a vida na pesca artesanal, um documentário curto sobre técnicas tradicionais de tecelagem de rede, e um perfil coletivo nas redes sociais que já reúne mais de 3.000 seguidores.\n\nO projeto não ensina tecnologia como fim. Ensina tecnologia como linguagem — uma forma de fazer a voz chegar mais longe.",
+    "type": "Sem categoria",
+    "territory": "Nordeste",
+    "categorySlug": null,
+    "territorySlug": "nordeste",
+    "featured": true,
+    "partners": "**Equipe**\n- Joana Ferreira — Coordenação do programa\n- Lucas Alves — Formação em vídeo e podcast\n- Sofia Mendes — Formação em fotografia\n\n**Parceiros**\n- Associação de Pescadores de Trairi\n- Colônia de Pesca Z-6\n- Governo do Estado do Ceará — Secult",
+    "startDate": "2024-06-01",
+    "endDate": null,
+    "gallery": []
+  },
+  {
+    "slug": "laboratorio-passarinho",
+    "title": "Laboratório Passarinho",
+    "description": "Oficina de construção de instrumentos musicais com materiais reutilizados, voltada para crianças e jovens do bairro Saco dos Limões.",
+    "longDescription": "O Laboratório Passarinho nasceu de uma pergunta simples: o que acontece quando você entrega uma tesoura, cola e sucata para um grupo de crianças e pede que elas inventem um som?\n\nDurante seis semanas, trinta jovens entre 8 e 14 anos construíram instrumentos com garrafas PET, latas, elásticos e bambu. Cada instrumento ganhou nome, história e um repertório próprio. O processo culminou em uma apresentação aberta ao bairro — não um espetáculo, mas uma mostra do que foi aprendido e inventado.\n\nO laboratório revelou que a música pode ser um ponto de entrada para a autonomia criativa: quem faz o instrumento, decide o som; quem decide o som, passa a escutar o mundo de outro jeito.",
+    "type": "Sem categoria",
+    "territory": "Florianópolis",
+    "categorySlug": null,
+    "territorySlug": "florianopolis",
+    "featured": true,
+    "partners": "**Equipe**\n- Ana Vieira — Coordenação pedagógica\n- Thiago Melo — Facilitação musical\n- Cláudia Ramos — Produção\n\n**Parceiros**\n- Escola Municipal Henrique Veras\n- Associação de Moradores Saco dos Limões",
+    "startDate": "2024-04-01",
+    "endDate": "2024-05-12",
+    "gallery": [
+      {
+        "src": "/images/content/capa.jpg",
+        "alt": "Laboratório Passarinho",
+        "caption": null
+      }
+    ]
+  },
+  {
+    "slug": "cartografias-do-possivel",
+    "title": "Cartografias do Possível",
+    "description": "Residência artística de dois meses em Atibaia, reunindo artistas e pesquisadores para investigar as relações entre território, memória e paisagem sonora.",
+    "longDescription": "Cartografias do Possível foi uma residência artística realizada em uma propriedade rural nos arredores de Atibaia durante os meses de março e abril de 2024. Seis artistas de diferentes áreas — artes visuais, música, fotografia e escrita — viveram e trabalharam juntos por oito semanas.\n\nO projeto partiu de uma questão: como o território fala? E como nós aprendemos a escutá-lo?\n\nCada residente desenvolveu um trabalho autoral a partir da experiência de imersão: caminhadas, conversas com moradores, registros sonoros da mata, da chuva, dos animais. O processo gerou uma publicação coletiva e uma exposição itinerante que circulou por três cidades.",
+    "type": "Residência",
+    "territory": "Atibaia",
+    "categorySlug": "residencias",
+    "territorySlug": "atibaia",
+    "featured": true,
+    "partners": "**Equipe**\n- Beatriz Fontes — Curadoria e coordenação\n- Rafael Souza — Facilitação do processo\n- Marina Costa — Produção e logística\n\n**Parceiros**\n- Fazenda Boa Vista\n- Secretaria de Cultura de Atibaia\n- Coletivo Margem",
+    "startDate": "2024-03-01",
+    "endDate": "2024-04-30",
+    "gallery": [
+      {
+        "src": "/images/content/cartografias-do-possivel.jpg",
+        "alt": "Cartografias do Possível",
+        "caption": null
+      }
+    ]
+  }
+]

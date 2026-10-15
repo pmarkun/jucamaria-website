@@ -48,7 +48,7 @@ test("Portuguese stays intact and English handles multiline editorial text", () 
   assert.equal(translate("Florianópolis", "en"), "Florianópolis");
 });
 
-test("content translation preserves identifiers and does not mutate CMS props", () => {
+test("content translation preserves identifiers and does not mutate page props", () => {
   const original = { title: "Tecnologia", slug: "Tecnologia", gallery: [{ alt: "Territórios", src: "/Territórios.jpg" }], startDate: "2024-04-01", projects: [{ description: "A Juca Maria existe através dos projetos." }] };
   const result = translateContent(original, "en");
   assert.equal(result.title, "Technology");

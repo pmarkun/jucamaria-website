@@ -1,5 +1,5 @@
 {
-  description = "Dev shell for Juca Maria website (Next.js + Strapi)";
+  description = "Dev shell for the local Juca Maria website";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

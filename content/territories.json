@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "atibaia",
+    "name": "Atibaia",
+    "description": "A serra de Atibaia abriga as residências artísticas da Juca Maria — um espaço de imersão, produção coletiva e encontro entre artistas de diferentes territórios.",
+    "phrase": "Residências artísticas e imersão criativa",
+    "image": "/images/placeholders/territorio-placeholder.svg"
+  },
+  {
+    "slug": "florianopolis",
+    "name": "Florianópolis",
+    "description": "Base principal da Juca Maria, Florianópolis concentra as atividades regulares de formação, laboratórios e parcerias com escolas e comunidades da região.",
+    "phrase": "Base de laboratórios e formação continuada",
+    "image": "/images/placeholders/territorio-placeholder.svg"
+  },
+  {
+    "slug": "nordeste",
+    "name": "Nordeste",
+    "description": "Atuação em parceria com comunidades do litoral e do sertão nordestino, com projetos de tecnologia, cultura popular e formação para jovens.",
+    "phrase": "Parcerias territoriais e formação comunitária",
+    "image": "/images/placeholders/territorio-placeholder.svg"
+  }
+]

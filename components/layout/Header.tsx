@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import Link from "@/components/LocalizedLink";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import home from "@/content/home.json";
 
 const navLinks = [
   { href: "/projetos", label: "Projetos" },
@@ -12,53 +13,16 @@ const navLinks = [
   { href: "/contato", label: "Contato" },
 ];
 
-function getStrapiBaseUrl() {
-  return process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337";
-}
-
 export default function Header() {
-  const { t, language } = useLanguage();
+  const { t, language, asset } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const logoUrl = home.logo ? asset(home.logo) : null;
   const router = useRouter();
   const [switchPath, setSwitchPath] = useState(router.asPath.split(/[?#]/)[0]);
 
   useEffect(() => {
     setSwitchPath(router.asPath);
   }, [router.asPath]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    async function loadLogo() {
-      try {
-        const base = router.basePath || "";
-        const manifestRes = await fetch(`${base}/_cms/manifest.json`, {
-          signal: controller.signal,
-        });
-        if (manifestRes.ok) {
-          const manifest = await manifestRes.json();
-          const localLogo = manifest?.home?.logo as string | undefined;
-          if (localLogo) {
-            setLogoUrl(localLogo);
-            return;
-          }
-        }
-
-        const res = await fetch(`${getStrapiBaseUrl()}/api/home?populate[logo]=true`, {
-          signal: controller.signal,
-        });
-        if (!res.ok) return;
-        const json = await res.json();
-        const url = json?.data?.logo?.url as string | undefined;
-        if (!url) return;
-        setLogoUrl(url.startsWith("http") ? url : `${getStrapiBaseUrl()}${url}`);
-      } catch {
-        // fallback textual logo
-      }
-    }
-    loadLogo();
-    return () => controller.abort();
-  }, [router.basePath]);
 
   return (
     <header
