@@ -58,6 +58,7 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
             src={asset(heroImage)}
             alt={t("Imagem de capa da Juca Maria")}
             className="w-full h-full object-cover"
+            style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/85 via-[#2B2B2B]/20 to-[#1C2B3A]/30" />
         </div>
@@ -156,6 +157,7 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
                     src={asset(territory.image)}
                     alt={territory.name}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    style={{ width: "100%", height: "100%" }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/80 via-transparent to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6">

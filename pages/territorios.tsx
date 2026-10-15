@@ -52,6 +52,7 @@ export default function TerritoriosPage({
                   src={asset(territory.image)}
                   alt={territory.name}
                   className="w-full h-full object-cover"
+                  style={{ width: "100%", height: "100%" }}
                 />
               </div>
 
