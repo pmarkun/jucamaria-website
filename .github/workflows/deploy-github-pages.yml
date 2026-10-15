@@ -28,6 +28,7 @@ jobs:
           cache: npm
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
@@ -38,6 +39,7 @@ jobs:
 
       - name: Build static site
         env:
+          SITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_TELEMETRY_DISABLED: "1"
           NODE_OPTIONS: "--require=./scripts/no-network.cjs"
         run: npm run build

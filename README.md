@@ -60,8 +60,10 @@ rede estão bloqueadas. Não há variável, secret ou serviço Strapi envolvido.
 O GitHub e o registro de pacotes continuam necessários para enviar o código,
 instalar dependências numa máquina nova e hospedar os arquivos prontos.
 
-Depois do merge em `main`, o workflow publica automaticamente em
-`https://pmarkun.github.io/jucamaria-website/`. A versão inglesa fica em `/en/`.
+Depois do merge em `main`, o workflow publica automaticamente no endereço
+configurado no GitHub Pages, atualmente `https://jucamaria.org.br/`.
+A versão inglesa fica em `/en/`. O workflow lê o prefixo do GitHub Pages:
+domínios próprios usam a raiz; páginas de projeto podem usar `/nome-do-repo`.
 
 ## Arquivos antigos
 
