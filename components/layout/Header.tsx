@@ -1,4 +1,6 @@
-import Link from "next/link";
+import { localizedPath, useLanguage } from "@/lib/i18n";
+import NextLink from "next/link";
+import Link from "@/components/LocalizedLink";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -15,9 +17,15 @@ function getStrapiBaseUrl() {
 }
 
 export default function Header() {
+  const { t, language } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const router = useRouter();
+  const [switchPath, setSwitchPath] = useState(router.asPath.split(/[?#]/)[0]);
+
+  useEffect(() => {
+    setSwitchPath(router.asPath);
+  }, [router.asPath]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -78,44 +86,64 @@ export default function Header() {
                 Juca Maria
               </span>
               <span className="text-[10px] uppercase tracking-widest text-[#C65A3A] font-medium">
-                Cultura · Arte · Educação
+                {t("Cultura · Arte · Educação")}
               </span>
             </div>
           )}
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className="text-sm text-[#2B2B2B] hover:text-[#C65A3A] transition-colors font-medium"
             >
-              {link.label}
+              {t(link.label)}
             </Link>
           ))}
         </nav>
 
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-1"
-          aria-label="Abrir menu"
-        >
-          <span
-            className={`block w-6 h-0.5 bg-[#2B2B2B] transition-transform ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
-          />
-          <span
-            className={`block w-6 h-0.5 bg-[#2B2B2B] transition-opacity ${menuOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block w-6 h-0.5 bg-[#2B2B2B] transition-transform ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
-          />
-        </button>
+        <div className="flex items-center gap-4">
+          <nav aria-label={t("Idioma")} className="flex gap-2 text-sm shrink-0">
+            {(["pt", "en"] as const).map((locale) => (
+              <NextLink
+                key={locale}
+                href={localizedPath(switchPath, locale)}
+                hrefLang={locale === "pt" ? "pt-BR" : "en"}
+                lang={locale === "pt" ? "pt-BR" : "en"}
+                aria-label={locale === "pt" ? "Português" : "English"}
+                aria-current={language === locale ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+                className={`p-2 ${language === locale ? "font-bold text-[#C65A3A] underline underline-offset-4" : "text-[#555] hover:underline"}`}
+              >
+                {locale.toUpperCase()}
+              </NextLink>
+            ))}
+          </nav>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="lg:hidden flex flex-col gap-1.5 p-1"
+            aria-label={t(menuOpen ? "Fechar menu" : "Abrir menu")}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+          >
+            <span
+              className={`block w-6 h-0.5 bg-[#2B2B2B] transition-transform ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
+            />
+            <span
+              className={`block w-6 h-0.5 bg-[#2B2B2B] transition-opacity ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block w-6 h-0.5 bg-[#2B2B2B] transition-transform ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+            />
+          </button>
+        </div>
       </div>
 
       {menuOpen && (
-        <div className="md:hidden border-t border-[#D8D3CA] bg-[#FAFAF7]">
-          <nav className="px-6 py-4 flex flex-col gap-4">
+        <div className="lg:hidden border-t border-[#D8D3CA] bg-[#FAFAF7]">
+          <nav id="mobile-navigation" className="px-6 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -123,7 +151,7 @@ export default function Header() {
                 onClick={() => setMenuOpen(false)}
                 className="text-base text-[#2B2B2B] hover:text-[#C65A3A] transition-colors font-medium"
               >
-                {link.label}
+                {t(link.label)}
               </Link>
             ))}
           </nav>

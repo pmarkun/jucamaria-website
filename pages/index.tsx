@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
+import Link from "@/components/LocalizedLink";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
 import type { Project, TerritoryData, HomeData } from "@/types/project";
@@ -34,10 +35,11 @@ interface HomeProps {
 }
 
 export default function Home({ featuredProjects, territoriesData, homeData }: HomeProps) {
+  const { t, asset } = useLanguage();
   const heroTitle =
-    homeData?.heroTitle ?? "Laboratórios de arte, cultura e tecnologia que criam presença no mundo.";
+    homeData?.heroTitle ?? t("Laboratórios de arte, cultura e tecnologia que criam presença no mundo.");
   const heroSubtitle =
-    homeData?.heroSubtitle ?? "Residências, oficinas e projetos territoriais em rede.";
+    homeData?.heroSubtitle ?? t("Residências, oficinas e projetos territoriais em rede.");
   const heroImage = homeData?.heroImage ?? "/images/placeholders/hero.svg";
 
   const methods =
@@ -53,9 +55,10 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={heroImage}
-            alt="Imagem de capa da Juca Maria"
+            src={asset(heroImage)}
+            alt={t("Imagem de capa da Juca Maria")}
             className="w-full h-full object-cover"
+            style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/85 via-[#2B2B2B]/20 to-[#1C2B3A]/30" />
         </div>
@@ -63,29 +66,29 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-32 w-full">
           <p className="text-[#E7B53E] text-xs uppercase tracking-widest font-medium mb-6">
-            Cultura · Arte · Educação
+            {t("Cultura · Arte · Educação")}
           </p>
           <h1
             style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
             className="text-4xl md:text-6xl lg:text-7xl font-semibold text-[#F2EFE8] max-w-3xl leading-tight mb-6"
           >
-            {heroTitle}
+            {t(heroTitle)}
           </h1>
           <p className="text-[#D8D3CA] text-lg md:text-xl max-w-xl mb-10">
-            {heroSubtitle}
+            {t(heroSubtitle)}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/projetos"
               className="inline-block px-8 py-3 bg-[#C65A3A] text-[#F2EFE8] text-sm font-medium hover:bg-[#a8492e] transition-colors"
             >
-              Ver projetos
+              {t("Ver projetos")}
             </Link>
             <Link
               href="/sobre"
               className="inline-block px-8 py-3 border border-[#FAFAF7] bg-[#FAFAF7] text-[#2B2B2B] text-sm font-medium hover:bg-[#E9E9E3] transition-colors"
             >
-              Conhecer a organização
+              {t("Conhecer a organização")}
             </Link>
           </div>
         </div>
@@ -96,23 +99,23 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
-              Portfólio
+              {t("Portfólio")}
             </p>
             <h2
               style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
               className="text-3xl md:text-4xl font-semibold text-[#2B2B2B]"
             >
-              Projetos
+              {t("Projetos")}
             </h2>
             <p className="text-[#555] mt-2 max-w-md">
-              A Juca Maria existe através dos projetos.
+              {t("A Juca Maria existe através dos projetos.")}
             </p>
           </div>
           <Link
             href="/projetos"
             className="text-sm font-medium text-[#2F4E6F] hover:text-[#C65A3A] transition-colors underline-offset-4 hover:underline whitespace-nowrap"
           >
-            Ver todos os projetos →
+            {t("Ver todos os projetos →")}
           </Link>
         </div>
 
@@ -128,16 +131,16 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12">
             <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
-              Presença
+              {t("Presença")}
             </p>
             <h2
               style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
               className="text-3xl md:text-4xl font-semibold text-[#F2EFE8]"
             >
-              Territórios
+              {t("Territórios")}
             </h2>
             <p className="text-[#D8D3CA] mt-2 max-w-md">
-              Cada território produz sua própria linguagem.
+              {t("Cada território produz sua própria linguagem.")}
             </p>
           </div>
 
@@ -151,9 +154,10 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
                 <div className="relative overflow-hidden" style={{ paddingBottom: "133.33%" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={territory.image}
+                    src={asset(territory.image)}
                     alt={territory.name}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    style={{ width: "100%", height: "100%" }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/80 via-transparent to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6">
@@ -178,13 +182,13 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
       <section className="py-24 max-w-7xl mx-auto px-6">
         <div className="mb-12">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
-            Método
+            {t("Método")}
           </p>
           <h2
             style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
             className="text-3xl md:text-4xl font-semibold text-[#2B2B2B]"
           >
-            Como atuamos
+            {t("Como atuamos")}
           </h2>
         </div>
 
@@ -198,10 +202,10 @@ export default function Home({ featuredProjects, territoriesData, homeData }: Ho
                 style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
                 className="text-xl font-semibold text-[#2B2B2B] mb-3"
               >
-                {item.title}
+                {t(item.title)}
               </h3>
               <p className="text-[#555] leading-relaxed text-sm">
-                {item.description}
+                {t(item.description)}
               </p>
             </div>
           ))}

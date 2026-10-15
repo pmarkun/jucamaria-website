@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
+import Link from "@/components/LocalizedLink";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
 import {
@@ -15,6 +16,7 @@ interface ProjectPageProps {
 }
 
 export default function ProjectPage({ project, related }: ProjectPageProps) {
+  const { t, language, asset } = useLanguage();
   const [hero, ...rest] = project.gallery;
   const fallbackHero = {
     src: "/images/placeholders/project-placeholder.svg",
@@ -26,13 +28,13 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
     <Layout
       title={project.title}
       description={project.description}
-      image={hero?.src ?? fallbackHero.src}
+      image={asset(hero?.src ?? fallbackHero.src)}
     >
       {/* ── Cabeçalho ─────────────────────── */}
       <section className="pt-16 pb-10 max-w-7xl mx-auto px-6">
         <div className="flex items-center gap-2 text-sm text-[#888] mb-6">
           <Link href="/projetos" className="hover:text-[#C65A3A] transition-colors">
-            Projetos
+            {t("Projetos")}
           </Link>
           <span>›</span>
           <span>{project.title}</span>
@@ -63,7 +65,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
           <div className="md:col-span-2 relative aspect-[16/10] overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={heroImage.src}
+              src={asset(heroImage.src)}
               alt={heroImage.alt}
               className="w-full h-full object-cover"
               style={{ width: "100%", height: "100%" }}
@@ -75,7 +77,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
               <div key={img.src} className="relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.src}
+                  src={asset(img.src)}
                   alt={img.alt}
                   className="w-full h-full object-cover"
                   style={{ width: "100%", height: "100%" }}
@@ -91,7 +93,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
               <div key={img.src} className="relative aspect-square overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.src}
+                  src={asset(img.src)}
                   alt={img.alt}
                   className="w-full h-full object-cover"
                   style={{ width: "100%", height: "100%" }}
@@ -120,22 +122,22 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
           {(project.startDate || project.endDate) && (
             <div>
               <h2 className="text-xs uppercase tracking-widest text-[#888] font-medium mb-4">
-                Período
+                {t("Período")}
               </h2>
               <p className="text-sm text-[#555]">
                 {project.startDate
-                  ? new Date(project.startDate + "T00:00:00").toLocaleDateString("pt-BR", {
+                  ? new Date(project.startDate + "T00:00:00").toLocaleDateString(language === "en" ? "en-US" : "pt-BR", {
                       month: "long",
                       year: "numeric",
                     })
                   : "—"}
-                {" até "}
+                {t(" até ")}
                 {project.endDate
-                  ? new Date(project.endDate + "T00:00:00").toLocaleDateString("pt-BR", {
+                  ? new Date(project.endDate + "T00:00:00").toLocaleDateString(language === "en" ? "en-US" : "pt-BR", {
                       month: "long",
                       year: "numeric",
                     })
-                  : "em andamento"}
+                  : t("em andamento")}
               </p>
             </div>
           )}
@@ -144,7 +146,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
           {project.partners && (
             <div>
               <h2 className="text-xs uppercase tracking-widest text-[#888] font-medium mb-4">
-                Parceiros &amp; Equipe
+                {t("Parceiros & Equipe")}
               </h2>
               <div
                 className="prose prose-sm max-w-none text-[#555]"
@@ -163,7 +165,7 @@ export default function ProjectPage({ project, related }: ProjectPageProps) {
               style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
               className="text-2xl font-semibold text-[#2B2B2B] mb-8"
             >
-              Outros projetos
+              {t("Outros projetos")}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {related.map((p) => (

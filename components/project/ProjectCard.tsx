@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Link from "@/components/LocalizedLink";
+import { useLanguage } from "@/lib/i18n";
 import type { Project } from "@/types/project";
 
 interface ProjectCardProps {
@@ -16,6 +17,7 @@ const TYPE_COLORS: Record<string, string> = {
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const { asset } = useLanguage();
   const coverImage = project.gallery[0];
   const fallbackImage = "/images/placeholders/project-placeholder.svg";
   const labelKey = (project.categorySlug ?? project.type).toLowerCase();
@@ -27,7 +29,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="relative aspect-[4/3] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={coverImage?.src ?? fallbackImage}
+            src={asset(coverImage?.src ?? fallbackImage)}
             alt={coverImage?.alt ?? project.title}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             style={{ width: "100%", height: "100%" }}

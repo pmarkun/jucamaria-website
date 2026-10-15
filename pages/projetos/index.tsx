@@ -1,3 +1,4 @@
+import { useLanguage } from "@/lib/i18n";
 import Layout from "@/components/layout/Layout";
 import ProjectGrid from "@/components/project/ProjectGrid";
 import type { Project } from "@/types/project";
@@ -8,25 +9,26 @@ interface ProjectsPageProps {
 }
 
 export default function ProjectsPage({ projects }: ProjectsPageProps) {
+  const { t } = useLanguage();
   return (
     <Layout
-      title="Projetos"
-      description="A Juca Maria existe através dos projetos. Conheça as oficinas, laboratórios e ações culturais em todo o Brasil."
+      title={t("Projetos")}
+      description={t("A Juca Maria existe através dos projetos. Conheça as oficinas, laboratórios e ações culturais em todo o Brasil.")}
     >
       {/* Header */}
       <section className="bg-[#FAFAF7] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <p className="text-[#C65A3A] text-xs uppercase tracking-widest font-medium mb-3">
-            Portfólio
+            {t("Portfólio")}
           </p>
           <h1
             style={{ fontFamily: "var(--font-lora, Lora, serif)" }}
             className="text-4xl md:text-5xl font-semibold text-[#2B2B2B] mb-4"
           >
-            Projetos
+            {t("Projetos")}
           </h1>
           <p className="text-[#555] text-lg max-w-xl">
-            A Juca Maria existe através dos projetos.
+            {t("A Juca Maria existe através dos projetos.")}
           </p>
         </div>
       </section>
