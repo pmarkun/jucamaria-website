@@ -1,3 +1,4 @@
+import { useLanguage } from "@/lib/i18n";
 import { useMemo, useState } from "react";
 import type { Project } from "@/types/project";
 import ProjectCard from "./ProjectCard";
@@ -13,6 +14,7 @@ export default function ProjectGrid({
   showFilters = true,
   showSearch = false,
 }: ProjectGridProps) {
+  const { t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [query, setQuery] = useState("");
 
@@ -44,7 +46,7 @@ export default function ProjectGrid({
           {showSearch && (
             <input
               type="text"
-              placeholder="Buscar projetos..."
+              placeholder={t("Buscar projetos...")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="border border-[#D8D3CA] bg-[#FAFAF7] px-4 py-2 text-sm text-[#2B2B2B] placeholder-[#aaa] focus:outline-none focus:border-[#C65A3A] w-full md:w-72"
@@ -60,7 +62,7 @@ export default function ProjectGrid({
                     : "bg-transparent text-[#2B2B2B] border-[#D8D3CA] hover:border-[#2B2B2B]"
                 }`}
               >
-                Todos
+                {t("Todos")}
               </button>
               {availableCategories.map((cat) => (
                 <button
@@ -81,7 +83,7 @@ export default function ProjectGrid({
       )}
 
       {filtered.length === 0 ? (
-        <p className="text-[#888] text-sm py-12 text-center">Nenhum projeto encontrado.</p>
+        <p className="text-[#888] text-sm py-12 text-center">{t("Nenhum projeto encontrado.")}</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((project) => (

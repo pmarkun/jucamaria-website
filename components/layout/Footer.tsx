@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
+import Link from "@/components/LocalizedLink";
 
 const navLinks = [
   { href: "/projetos", label: "Projetos" },
@@ -9,6 +10,7 @@ const navLinks = [
 ];
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer
       style={{ fontFamily: "var(--font-inter, Inter, sans-serif)" }}
@@ -25,9 +27,8 @@ export default function Footer() {
               Juca Maria
             </div>
             <p className="text-sm text-[#D8D3CA] leading-relaxed mb-4">
-              Não levamos cultura.
-              <br />
-              Construímos situações para ela existir.
+              {t("Não levamos cultura.")}<br />
+              {t("Construímos situações para ela existir.")}
             </p>
             <div className="flex gap-4 mt-6">
               <a
@@ -42,7 +43,7 @@ export default function Footer() {
                 href="mailto:contato@jucamaria.org"
                 className="text-[#D8D3CA] hover:text-[#E7B53E] transition-colors text-sm"
               >
-                E-mail
+                {t("E-mail")}
               </a>
             </div>
           </div>
@@ -50,7 +51,7 @@ export default function Footer() {
           {/* Navegação */}
           <div>
             <h3 className="text-xs uppercase tracking-widest text-[#C65A3A] font-medium mb-4">
-              Navegação
+              {t("Navegação")}
             </h3>
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -59,7 +60,7 @@ export default function Footer() {
                   href={link.href}
                   className="text-sm text-[#D8D3CA] hover:text-[#F2EFE8] transition-colors"
                 >
-                  {link.label}
+                  {t(link.label)}
                 </Link>
               ))}
             </nav>
@@ -68,18 +69,18 @@ export default function Footer() {
           {/* Institucional */}
           <div>
             <h3 className="text-xs uppercase tracking-widest text-[#C65A3A] font-medium mb-4">
-              Institucional
+              {t("Institucional")}
             </h3>
             <div className="flex flex-col gap-2">
               <span className="text-sm text-[#D8D3CA]">
-                Juca Maria — Cultura, Arte e Educação
+                {t("Juca Maria — Cultura, Arte e Educação")}
               </span>
-              <span className="text-sm text-[#D8D3CA]">Associação Civil</span>
+              <span className="text-sm text-[#D8D3CA]">{t("Associação Civil")}</span>
               <Link
                 href="/sobre#transparencia"
                 className="text-sm text-[#D8D3CA] hover:text-[#F2EFE8] transition-colors mt-2"
               >
-                Transparência
+                {t("Transparência")}
               </Link>
               <a
                 href="mailto:contato@jucamaria.org"
@@ -93,11 +94,10 @@ export default function Footer() {
 
         <div className="border-t border-[#3a3a3a] mt-12 pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <p className="text-xs text-[#888] ">
-            © {new Date().getFullYear()} Juca Maria — Cultura, Arte e Educação.
-            Todos os direitos reservados.
+            © {new Date().getFullYear()} {t("Juca Maria — Cultura, Arte e Educação.")} {t("Todos os direitos reservados.")}
           </p>
           <p className="text-xs text-[#888]">
-            A arte reorganiza o possível.
+            {t("A arte reorganiza o possível.")}
           </p>
         </div>
       </div>
