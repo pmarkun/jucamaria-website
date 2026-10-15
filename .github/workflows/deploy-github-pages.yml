@@ -17,8 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_STRAPI_URL: ${{ vars.NEXT_PUBLIC_STRAPI_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Setup Pages
@@ -35,14 +33,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate Strapi URL
-        run: |
-          if [ -z "${NEXT_PUBLIC_STRAPI_URL}" ]; then
-            echo "NEXT_PUBLIC_STRAPI_URL não está definida em Settings > Variables > Actions"
-            exit 1
-          fi
+      - name: Validate local content
+        run: npm test
 
       - name: Build static site
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NODE_OPTIONS: "--require=./scripts/no-network.cjs"
         run: npm run build
 
       - name: Disable Jekyll

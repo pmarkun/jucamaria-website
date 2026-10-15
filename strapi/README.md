@@ -1,3 +1,9 @@
+# Configuração anterior — fora do site atual
+
+O site agora utiliza `../content/` e imagens e fontes locais em `../public/`.
+Este projeto Strapi foi preservado como histórico; não é necessário iniciá-lo
+para desenvolver, gerar ou publicar o site. Consulte o README da raiz.
+
 # 🚀 Getting started with Strapi
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.

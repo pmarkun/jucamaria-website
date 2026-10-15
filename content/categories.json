@@ -1,0 +1,17 @@
+[
+  {
+    "slug": "arte",
+    "name": "Arte",
+    "longDescription": null
+  },
+  {
+    "slug": "residencias",
+    "name": "Residência",
+    "longDescription": "Residência!"
+  },
+  {
+    "slug": "tecnologia",
+    "name": "Tecnologia",
+    "longDescription": null
+  }
+]
