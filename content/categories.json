@@ -5,6 +5,11 @@
     "longDescription": null
   },
   {
+    "slug": "literatura",
+    "name": "Literatura",
+    "longDescription": "Livros e processos de criação que aproximam literatura, infância e território."
+  },
+  {
     "slug": "residencias",
     "name": "Residência",
     "longDescription": "Residência!"

@@ -3,8 +3,9 @@ import homeContent from "@/content/home.json";
 import projectContent from "@/content/projects.json";
 import territoryContent from "@/content/territories.json";
 import categoryContent from "@/content/categories.json";
+import mangueDasCapivaras from "@/content/projects/mangue-das-capivaras.json";
 
-const projects: Project[] = projectContent;
+const projects: Project[] = [mangueDasCapivaras, ...projectContent];
 const territories: TerritoryData[] = territoryContent;
 const categories: CategoryData[] = categoryContent;
 

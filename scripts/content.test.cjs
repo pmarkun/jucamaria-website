@@ -7,7 +7,7 @@ const ts = require("typescript");
 
 const root = path.resolve(__dirname, "..");
 const read = name => require(path.join(root, "content", `${name}.json`));
-const projects = read("projects");
+const projects = [require("../content/projects/mangue-das-capivaras.json"), ...read("projects")];
 const territories = read("territories");
 const categories = read("categories");
 const home = read("home");
@@ -67,4 +67,18 @@ test("related projects require a real shared territory or category", async () =>
   }
   assert.deepEqual(await data.getRelatedProjects({ slug: "no-relations", categorySlug: null, territorySlug: null }), []);
   assert.equal((await data.getRelatedProjects({ slug: "new", territorySlug: territories[0].slug }, 0)).length, 0);
+});
+
+test("Mangue das Capivaras is discoverable in Florianópolis and literature", async () => {
+  const project = await data.getProjectBySlug("mangue-das-capivaras");
+  assert.ok(project);
+  assert.ok((await data.getProjectsByTerritorySlug("florianopolis")).some(p => p.slug === project.slug));
+  assert.ok((await data.getProjectsByCategorySlug("literatura")).some(p => p.slug === project.slug));
+  assert.ok((await data.getFeaturedProjects()).some(p => p.slug === project.slug));
+  assert.equal(project.status, "Em desenvolvimento");
+  assert.equal(project.startDate, undefined);
+  assert.equal(project.endDate, undefined);
+  assert.ok(project.sections.every(section => section.id && section.title && section.paragraphs.length));
+  assert.equal(new Set(project.sections.map(section => section.id)).size, project.sections.length);
+  assert.ok((await data.getRelatedProjects(project)).some(p => p.slug === "laboratorio-passarinho"));
 });

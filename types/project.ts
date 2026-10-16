@@ -28,6 +28,13 @@ export interface Project {
   partners?: string | null;
   startDate?: string | null;
   endDate?: string | null;
+  status?: string;
+  lead?: string;
+  facts?: Array<{ label: string; value: string }>;
+  sections?: Array<{ id: string; title: string; paragraphs: string[] }>;
+  process?: Array<{ title: string; description: string }>;
+  team?: Array<{ name: string; role: string }>;
+  organizations?: Array<{ name: string; role: string }>;
 }
 
 export interface MethodItem {
