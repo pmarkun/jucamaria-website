@@ -60,3 +60,20 @@ test("content translation preserves identifiers and does not mutate page props",
   assert.equal(original.title, "Tecnologia");
   assert.equal(translateContent(original, "pt"), original);
 });
+
+test("structured project sections are translated while anchor ids and people remain intact", () => {
+  const project = require("../content/projects/mangue-das-capivaras.json");
+  const translated = translateContent(project, "en");
+  assert.equal(translated.sections[0].id, project.sections[0].id);
+  assert.equal(translated.sections[0].title, "A capybara. A mangrove. A letter.");
+  for (let index = 0; index < project.sections.length; index++) {
+    for (let paragraph = 0; paragraph < project.sections[index].paragraphs.length; paragraph++) {
+      assert.notEqual(translated.sections[index].paragraphs[paragraph], project.sections[index].paragraphs[paragraph]);
+    }
+  }
+  assert.equal(translated.facts[2].value, "2,000 free copies");
+  assert.equal(translated.status, "In development");
+  assert.equal(translated.team[0].name, project.team[0].name);
+  assert.notEqual(translated.team[0].role, project.team[0].role);
+  assert.equal(translated.gallery[0].src, project.gallery[0].src);
+});

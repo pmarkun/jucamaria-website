@@ -2,6 +2,7 @@ import { useLanguage } from "@/lib/i18n";
 import Link from "@/components/LocalizedLink";
 import Layout from "@/components/layout/Layout";
 import ProjectCard from "@/components/project/ProjectCard";
+import ProjectEditorial from "@/components/project/ProjectEditorial";
 import {
   getProjects,
   getProjectBySlug,
@@ -17,6 +18,9 @@ interface ProjectPageProps {
 
 export default function ProjectPage({ project, related }: ProjectPageProps) {
   const { t, language, asset } = useLanguage();
+  if (project.sections?.length) {
+    return <ProjectEditorial project={project} related={related} />;
+  }
   const [hero, ...rest] = project.gallery;
   const fallbackHero = {
     src: "/images/placeholders/project-placeholder.svg",

@@ -19,6 +19,8 @@ Abra `http://localhost:3000`. Em uma instalação nova, rode primeiro
 
 - `content/home.json`: chamada da página inicial, logo, capa e método.
 - `content/projects.json`: projetos, galeria, datas, equipe e parceiros.
+- `content/projects/mangue-das-capivaras.json`: ficha detalhada do Mangue das Capivaras,
+  com seções, processo de criação, metas, equipe e vínculo territorial.
 - `content/territories.json`: territórios de atuação.
 - `content/categories.json`: categorias dos projetos.
 - `public/images/content/`: imagens utilizadas pelo conteúdo.
@@ -36,6 +38,12 @@ os parâmetros e a âncora. As traduções estão em `lib/translations/en.json`.
 Ao editar um texto em português, atualize sua tradução nesse catálogo.
 Texto sem tradução usa o original; nomes de projetos, pessoas e organizações
 permanecem no original. URLs, identificadores e datas não são traduzidos.
+
+Projetos com `sections` usam a apresentação editorial em
+`components/project/ProjectEditorial.tsx`. Os textos ficam em campos estruturados
+(`paragraphs`, `facts`, `process`, `team`, `organizations`), sem precisar escrever
+HTML. O campo `territorySlug` conecta a ficha à listagem do território e aos
+projetos relacionados. A composição de todos os registros fica em `lib/data.ts`.
 
 ## Validar e gerar
 

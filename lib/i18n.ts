@@ -33,6 +33,7 @@ export function translate(text: string, language: Language): string {
 const editorialFields = new Set([
   "title", "name", "description", "longDescription", "type", "territory", "phrase",
   "heroTitle", "heroSubtitle", "alt", "caption", "partners",
+  "status", "lead", "label", "value", "paragraphs", "role",
 ]);
 
 export function translateContent<T>(value: T, language: Language): T {
@@ -40,9 +41,11 @@ export function translateContent<T>(value: T, language: Language): T {
   if (Array.isArray(value)) return value.map(item => translateContent(item, language)) as T;
   return Object.fromEntries(Object.entries(value).map(([key, item]) => [
     key,
-    typeof item === "string" && editorialFields.has(key)
+    editorialFields.has(key) && typeof item === "string"
       ? translate(item, language)
-      : translateContent(item, language),
+      : editorialFields.has(key) && Array.isArray(item)
+        ? item.map(entry => typeof entry === "string" ? translate(entry, language) : translateContent(entry, language))
+        : translateContent(item, language),
   ])) as T;
 }
 

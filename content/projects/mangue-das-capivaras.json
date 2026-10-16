@@ -1,0 +1,80 @@
+{
+  "slug": "mangue-das-capivaras",
+  "title": "Mangue das Capivaras",
+  "description": "Um livro infantil criado a partir da escuta de crianças para conversar sobre o mangue, a cidade e o direito de pertencer. Um projeto da Sabichinho em Santa Catarina, conectado a Florianópolis.",
+  "type": "Literatura",
+  "territory": "Florianópolis",
+  "categorySlug": "literatura",
+  "territorySlug": "florianopolis",
+  "featured": true,
+  "status": "Em desenvolvimento",
+  "lead": "Quem tem direito a habitar a cidade?",
+  "gallery": [
+    {
+      "src": "/images/content/mangue-das-capivaras/capivara-na-vegetacao.webp",
+      "alt": "Capivara entre galhos e folhas, observada em meio à vegetação.",
+      "caption": "Imagem de referência · Acervo Projeto Extensão Capivaras."
+    }
+  ],
+  "facts": [
+    { "label": "Público", "value": "Crianças de 7 a 11 anos" },
+    { "label": "Formato previsto", "value": "Livro ilustrado · 48 páginas" },
+    { "label": "Tiragem prevista", "value": "2.000 exemplares gratuitos" },
+    { "label": "Território de referência", "value": "Florianópolis · Santa Catarina" }
+  ],
+  "sections": [
+    {
+      "id": "historia",
+      "title": "Uma capivara. Um mangue. Uma carta.",
+      "paragraphs": [
+        "A protagonista vive em um mangue que deveria ter se tornado parque. Quando descobre que essa promessa ficou pelo caminho e que seu território está ameaçado, ela decide fazer alguma coisa: juntar outras vozes e escrever uma carta ao prefeito.",
+        "Na narrativa em construção, a capivara encontra crianças, uma benzedeira, um pescador e outros habitantes do mangue. Caranguejo, garça, tainha e jacaré-do-papo-amarelo ajudam a contar a história de um lugar onde natureza, memória e vida comunitária se encontram.",
+        "O livro abre uma conversa sobre pertencimento, compromissos ambientais e ação coletiva. A pergunta atravessa a história: o que podemos fazer, juntos, para cuidar do lugar onde vivemos?"
+      ]
+    },
+    {
+      "id": "territorio",
+      "title": "Uma história enraizada em Florianópolis.",
+      "paragraphs": [
+        "Florianópolis é o território de referência do projeto: uma cidade em que manguezais, bairros, águas e construções compartilham o mesmo espaço. A proposta literária parte dessa convivência e das disputas sobre como a cidade cresce e cuida de seus ambientes.",
+        "O debate em torno do Parque do Jacaré aparece nos materiais do projeto como uma das inspirações para a promessa de parque presente na narrativa. O mangue entra no livro como habitat de muitos bichos e como um lugar de trabalho, saberes, lembranças e vínculos humanos.",
+        "A criação se conecta também a outras cidades de Santa Catarina. As diferentes experiências das crianças e dos educadores ajudam a ampliar o olhar sobre o território, sem apagar o ponto de partida em Florianópolis."
+      ]
+    },
+    {
+      "id": "escuta",
+      "title": "As crianças entram como autoras.",
+      "paragraphs": [
+        "O processo da Sabichinho começa pela escuta. Nas oficinas, as crianças inventam personagens, desenham, contam histórias e conversam sobre os lugares onde vivem. Esses materiais alimentam as escolhas narrativas e visuais do livro.",
+        "Cada participante pode criar uma capivara ou outro habitante do mesmo ambiente, com nome, personalidade, sonhos e um jeito próprio de ver o mundo. A imaginação aproxima o conflito da história das experiências concretas de cada criança.",
+        "As cartas e os cartazes são parte central dessa criação: os personagens contam quem são, o que acontece no território e o que gostariam de transformar. A metodologia prevê o encaminhamento das cartas ao poder público, aproximando literatura e participação cidadã."
+      ]
+    },
+    {
+      "id": "livro",
+      "title": "Um livro para criar e compartilhar.",
+      "paragraphs": [
+        "O projeto está em desenvolvimento. A proposta prevê um livro ilustrado de 48 páginas, uma primeira tiragem de 2.000 exemplares para distribuição gratuita e cinco oficinas de criação e escuta com crianças e educadores em Santa Catarina.",
+        "Também estão previstas uma edição digital sob licença Creative Commons, recursos de acessibilidade como audiobook e VLibras, lançamentos públicos e circulação por escolas, bibliotecas e espaços culturais.",
+        "A construção editorial reúne os materiais das oficinas em um trabalho coletivo de escrita, ilustração e edição. As quantidades e os formatos apresentados aqui são metas do projeto; não representam entregas já concluídas."
+      ]
+    }
+  ],
+  "process": [
+    { "title": "Escutar", "description": "Conversar com as crianças e reconhecer o que elas percebem, imaginam e desejam para o território." },
+    { "title": "Inventar", "description": "Criar personagens, desenhos, cartas e cartazes que tragam a voz de cada participante." },
+    { "title": "Construir juntos", "description": "Reunir a escuta das oficinas e o trabalho de autores, ilustradores e educadores na criação do livro." },
+    { "title": "Compartilhar", "description": "Fazer a história circular em livros, encontros e formatos acessíveis, conforme as etapas previstas do projeto." }
+  ],
+  "team": [
+    { "name": "Pedro Markun", "role": "Coordenação geral, texto e articulação territorial" },
+    { "name": "Paula Desgualdo", "role": "Texto e coordenação pedagógica" },
+    { "name": "André Rodrigues", "role": "Direção de arte e projeto gráfico" },
+    { "name": "Larissa Ribeiro", "role": "Ilustração e facilitação visual" }
+  ],
+  "organizations": [
+    { "name": "Sabichinho / Arapy Produções", "role": "Realização" },
+    { "name": "Estúdio Rebimboca", "role": "Criação visual e projeto gráfico" },
+    { "name": "Prêmio Elisabete Anderle de Estímulo à Cultura 2025", "role": "Apoio · Fundação Catarinense de Cultura" }
+  ]
+}
